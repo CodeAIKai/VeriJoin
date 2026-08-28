@@ -1,0 +1,63 @@
+{
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "note": "validator-only ablation on identical generated programs",
+  "predictions": 12576,
+  "variants": [
+    {
+      "accepted": 12366,
+      "accepted_rate": 98.33015267175573,
+      "answer_em": 75.91444020356234,
+      "answer_f1": 81.95077342553603,
+      "examples": 12576,
+      "parsed": 12575,
+      "strict_answer_em": 75.91444020356234,
+      "strict_answer_f1": 81.95077342553603,
+      "variant": "answer_only"
+    },
+    {
+      "accepted": 12366,
+      "accepted_rate": 98.33015267175573,
+      "answer_em": 75.91444020356234,
+      "answer_f1": 81.95077342553603,
+      "examples": 12576,
+      "parsed": 12575,
+      "strict_answer_em": 75.91444020356234,
+      "strict_answer_f1": 81.95077342553603,
+      "variant": "citation_only"
+    },
+    {
+      "accepted": 11596,
+      "accepted_rate": 92.20737913486005,
+      "answer_em": 75.91444020356234,
+      "answer_f1": 81.95077342553603,
+      "examples": 12576,
+      "parsed": 12575,
+      "strict_answer_em": 72.67811704834605,
+      "strict_answer_f1": 77.96162650510556,
+      "variant": "no_connectivity"
+    },
+    {
+      "accepted": 11596,
+      "accepted_rate": 92.20737913486005,
+      "answer_em": 75.91444020356234,
+      "answer_f1": 81.95077342553603,
+      "examples": 12576,
+      "parsed": 12575,
+      "strict_answer_em": 72.67811704834605,
+      "strict_answer_f1": 77.96162650510556,
+      "variant": "free_literal"
+    },
+    {
+      "accepted": 11596,
+      "accepted_rate": 92.20737913486005,
+      "answer_em": 75.91444020356234,
+      "answer_f1": 81.95077342553603,
+      "examples": 12576,
+      "parsed": 12575,
+      "strict_answer_em": 72.67811704834605,
+      "strict_answer_f1": 77.96162650510556,
+      "variant": "full"
+    }
+  ]
+}

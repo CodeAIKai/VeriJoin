@@ -1,0 +1,28 @@
+{
+  "answer_f1": {
+    "bootstrap_samples": 5000,
+    "candidate_losses": 262,
+    "candidate_wins": 213,
+    "ci95_lower": -3.468403393164766,
+    "ci95_upper": 0.32754197780376715,
+    "examples": 1680,
+    "mean_difference": -1.6019060796907416,
+    "ties": 1205,
+    "two_sided_p": 0.10237952409518096
+  },
+  "baseline": "artifacts/predictions/ablations/answer-musique-full.jsonl",
+  "baseline_answer_f1": 68.75362650887863,
+  "baseline_task": "answer",
+  "candidate": "artifacts/predictions/stage3-musique-full-fixed-n4.jsonl",
+  "candidate_answer_f1": 67.15172042918786,
+  "candidate_eligibility_rate": 69.50765411667356,
+  "candidate_eligible_examples": 1680,
+  "candidate_task": "program-certified",
+  "compared_examples": 1680,
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "scope": "paired example bootstrap; does not measure training-seed variance",
+  "seed": 20260825,
+  "subset": "candidate-eligible",
+  "total_examples": 2417
+}

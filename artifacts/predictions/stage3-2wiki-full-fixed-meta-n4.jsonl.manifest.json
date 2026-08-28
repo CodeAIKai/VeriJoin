@@ -1,0 +1,12 @@
+{
+  "checkpoint": "artifacts/checkpoints/meta-ranker.json",
+  "checkpoint_sha256": "db620d61611c9dd435aaaf6fba5ac452d1fe1003220e46e5e0247c8786d1be9a",
+  "dataset": "2wiki",
+  "dataset_variant": null,
+  "derived_from": "artifacts/predictions/stage3-2wiki-full-fixed-ranker-n4.jsonl",
+  "examples": 12576,
+  "selected": 12509,
+  "split": "dev",
+  "status": "complete",
+  "uses_gold_labels": false
+}

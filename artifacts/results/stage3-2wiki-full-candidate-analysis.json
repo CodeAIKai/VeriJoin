@@ -1,0 +1,23 @@
+{
+  "candidate_answer_valid_rate": 98.42358460559797,
+  "candidate_parse_rate": 99.99006043256998,
+  "candidates": 50304,
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "examples": 12576,
+  "examples_with_answer_candidate_rate": 99.44338422391857,
+  "examples_with_correct_candidate_rate": 80.60591603053435,
+  "examples_with_strict_correct_candidate_rate": 78.35559796437659,
+  "global_consensus_answer_em": 76.67779898218829,
+  "global_consensus_answer_f1": 82.72019497361165,
+  "oracle_at_n_answer_em": 80.60591603053435,
+  "oracle_at_n_answer_f1": 85.76846119893774,
+  "oracle_at_n_strict_answer_em": 78.35559796437659,
+  "oracle_at_n_strict_answer_f1": 83.0154541863468,
+  "predictions": 12576,
+  "selected_answer_em": 76.72550890585242,
+  "selected_answer_f1": 82.78616333872124,
+  "tier_consensus_answer_em": 76.68575063613231,
+  "tier_consensus_answer_f1": 82.70837451731714,
+  "uses_gold_labels": true
+}

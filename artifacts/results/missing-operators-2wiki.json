@@ -1,0 +1,143 @@
+{
+  "allow_literal": false,
+  "by_answer_operator": {
+    "argmax": {
+      "answer_f1": 96.28964691801316,
+      "answer_valid_rate": 99.82046678635548,
+      "certified_rate": 99.82046678635548,
+      "count": 1671,
+      "share_of_parsed": 13.287213740458014,
+      "strict_answer_f1": 96.28964691801316,
+      "valid_rate": 99.82046678635548
+    },
+    "argmin": {
+      "answer_f1": 99.42742523705327,
+      "answer_valid_rate": 99.78118161925602,
+      "certified_rate": 99.78118161925602,
+      "count": 2742,
+      "share_of_parsed": 21.803435114503817,
+      "strict_answer_f1": 99.42742523705327,
+      "valid_rate": 99.78118161925602
+    },
+    "bool": {
+      "answer_f1": 80.76923076923077,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 0.0,
+      "count": 442,
+      "share_of_parsed": 3.5146310432569976,
+      "strict_answer_f1": 80.76923076923077,
+      "valid_rate": 100.0
+    },
+    "common": {
+      "answer_f1": 27.45098039215686,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 94.11764705882354,
+      "count": 17,
+      "share_of_parsed": 0.13517811704834606,
+      "strict_answer_f1": 27.45098039215686,
+      "valid_rate": 94.11764705882354
+    },
+    "copy": {
+      "answer_f1": 72.50634582546208,
+      "answer_valid_rate": 99.24098671726755,
+      "certified_rate": 91.65085388994308,
+      "count": 6851,
+      "share_of_parsed": 54.47678117048346,
+      "strict_answer_f1": 67.88355335581157,
+      "valid_rate": 91.65085388994308
+    },
+    "equal": {
+      "answer_f1": 88.62837045720985,
+      "answer_valid_rate": 99.2966002344666,
+      "certified_rate": 99.2966002344666,
+      "count": 853,
+      "share_of_parsed": 6.782760814249364,
+      "strict_answer_f1": 88.62837045720985,
+      "valid_rate": 99.2966002344666
+    }
+  },
+  "by_join_family": {
+    "both": {
+      "answer_f1": 72.46076239429215,
+      "answer_valid_rate": 99.30688688983926,
+      "certified_rate": 91.62365432827016,
+      "count": 6781,
+      "share_of_parsed": 53.920165394402034,
+      "strict_answer_f1": 67.7902490172717,
+      "valid_rate": 91.62365432827016
+    },
+    "equi_only": {
+      "answer_f1": 0.0,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 100.0,
+      "count": 1,
+      "share_of_parsed": 0.007951653944020356,
+      "strict_answer_f1": 0.0,
+      "valid_rate": 100.0
+    },
+    "none": {
+      "answer_f1": 95.05784838542564,
+      "answer_valid_rate": 99.65463650492143,
+      "certified_rate": 92.02210326368503,
+      "count": 5791,
+      "share_of_parsed": 46.04802798982188,
+      "strict_answer_f1": 95.05784838542564,
+      "valid_rate": 99.65463650492143
+    },
+    "query_only": {
+      "answer_f1": 67.07070707070706,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 100.0,
+      "count": 3,
+      "share_of_parsed": 0.02385496183206107,
+      "strict_answer_f1": 67.07070707070706,
+      "valid_rate": 100.0
+    }
+  },
+  "by_mode": {
+    "bridge": {
+      "answer_f1": 72.48842295747949,
+      "answer_valid_rate": 99.32133372676306,
+      "certified_rate": 91.67896134552966,
+      "count": 6778,
+      "share_of_parsed": 53.896310432569976,
+      "strict_answer_f1": 67.82239953388387,
+      "valid_rate": 91.67896134552966
+    },
+    "comparison": {
+      "answer_f1": 95.05784838542564,
+      "answer_valid_rate": 99.65463650492143,
+      "certified_rate": 92.02210326368503,
+      "count": 5791,
+      "share_of_parsed": 46.04802798982188,
+      "strict_answer_f1": 95.05784838542564,
+      "valid_rate": 99.65463650492143
+    },
+    "composition": {
+      "answer_f1": 16.888888888888893,
+      "answer_valid_rate": 80.0,
+      "certified_rate": 20.0,
+      "count": 5,
+      "share_of_parsed": 0.03975826972010178,
+      "strict_answer_f1": 8.0,
+      "valid_rate": 20.0
+    },
+    "unknown": {
+      "answer_f1": 73.33333333333334,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 100.0,
+      "count": 2,
+      "share_of_parsed": 0.015903307888040712,
+      "strict_answer_f1": 73.33333333333334,
+      "valid_rate": 100.0
+    }
+  },
+  "certified_rate": 91.80979643765903,
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "examples": 12576,
+  "parse_rate": 100.0,
+  "parsed": 12576,
+  "predictions": 12576,
+  "valid_rate": 95.32442748091603
+}

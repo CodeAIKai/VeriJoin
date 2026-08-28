@@ -1,0 +1,9 @@
+{
+  "additional_model_calls": 0,
+  "dataset": "musique",
+  "dataset_variant": null,
+  "derived_from": "artifacts/predictions/stage3-musique-full-guided-n4.jsonl",
+  "examples": 2417,
+  "execution_guided": false,
+  "split": "dev"
+}

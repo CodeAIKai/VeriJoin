@@ -1,0 +1,23 @@
+{
+  "candidate_answer_valid_rate": 95.72923700202566,
+  "candidate_parse_rate": 99.9898717083052,
+  "candidates": 29620,
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "examples": 7405,
+  "examples_with_answer_candidate_rate": 98.14989871708305,
+  "examples_with_correct_candidate_rate": 69.23700202565834,
+  "examples_with_strict_correct_candidate_rate": 64.38892640108035,
+  "global_consensus_answer_em": 62.21471978392978,
+  "global_consensus_answer_f1": 75.83825436251367,
+  "oracle_at_n_answer_em": 69.23700202565834,
+  "oracle_at_n_answer_f1": 80.83479252750527,
+  "oracle_at_n_strict_answer_em": 64.38892640108035,
+  "oracle_at_n_strict_answer_f1": 75.164385976088,
+  "predictions": 7405,
+  "selected_answer_em": 62.21471978392978,
+  "selected_answer_f1": 75.93584159784567,
+  "tier_consensus_answer_em": 62.174206617150574,
+  "tier_consensus_answer_f1": 75.84047700605508,
+  "uses_gold_labels": true
+}

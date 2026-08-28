@@ -1,0 +1,23 @@
+{
+  "model": "/path/to/Qwen2.5-7B-Instruct",
+  "train_file": "/path/to/VeriJoin/artifacts/sft/ablations/answer.train.v2.max6656.jsonl",
+  "eval_file": "/path/to/VeriJoin/artifacts/sft/ablations/answer.holdout.v2.max6656.jsonl",
+  "output_dir": "/path/to/VeriJoin/artifacts/checkpoints/ablations/answer-stage1-2k",
+  "max_length": 6656,
+  "learning_rate": 0.00015,
+  "epochs": 1.0,
+  "batch_size": 1,
+  "gradient_accumulation": 8,
+  "lora_rank": 64,
+  "lora_alpha": 128,
+  "lora_dropout": 0.05,
+  "warmup_ratio": 0.03,
+  "logging_steps": 10,
+  "save_steps": 125,
+  "eval_steps": 125,
+  "eval_max_examples": 128,
+  "max_steps": 250,
+  "balance_datasets": true,
+  "balance_operators": true,
+  "seed": 20260825
+}

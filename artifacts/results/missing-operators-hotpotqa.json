@@ -1,0 +1,143 @@
+{
+  "allow_literal": false,
+  "by_answer_operator": {
+    "argmax": {
+      "answer_f1": 76.97994987468672,
+      "answer_valid_rate": 97.36842105263158,
+      "certified_rate": 97.36842105263158,
+      "count": 38,
+      "share_of_parsed": 0.513166779203241,
+      "strict_answer_f1": 76.97994987468672,
+      "valid_rate": 97.36842105263158
+    },
+    "argmin": {
+      "answer_f1": 85.09070294784577,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 99.24812030075188,
+      "count": 133,
+      "share_of_parsed": 1.7960837272113437,
+      "strict_answer_f1": 85.09070294784577,
+      "valid_rate": 99.24812030075188
+    },
+    "bool": {
+      "answer_f1": 83.89261744966443,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 0.0,
+      "count": 447,
+      "share_of_parsed": 6.036461850101283,
+      "strict_answer_f1": 83.89261744966443,
+      "valid_rate": 100.0
+    },
+    "common": {
+      "answer_f1": 69.08212508212515,
+      "answer_valid_rate": 90.45045045045045,
+      "certified_rate": 86.66666666666667,
+      "count": 555,
+      "share_of_parsed": 7.494935854152599,
+      "strict_answer_f1": 66.48753048753053,
+      "valid_rate": 86.66666666666667
+    },
+    "copy": {
+      "answer_f1": 76.07577626232293,
+      "answer_valid_rate": 98.66366124617613,
+      "certified_rate": 90.29141845113509,
+      "count": 6211,
+      "share_of_parsed": 83.87575962187711,
+      "strict_answer_f1": 70.37230206786482,
+      "valid_rate": 90.29141845113509
+    },
+    "equal": {
+      "answer_f1": 95.23809523809524,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 100.0,
+      "count": 21,
+      "share_of_parsed": 0.2835921674544227,
+      "strict_answer_f1": 95.23809523809524,
+      "valid_rate": 100.0
+    }
+  },
+  "by_join_family": {
+    "both": {
+      "answer_f1": 78.01436440780905,
+      "answer_valid_rate": 98.9424703891709,
+      "certified_rate": 89.76311336717428,
+      "count": 4728,
+      "share_of_parsed": 63.84875084402431,
+      "strict_answer_f1": 71.92903441067705,
+      "valid_rate": 89.80541455160744
+    },
+    "equi_only": {
+      "answer_f1": 71.93047922918687,
+      "answer_valid_rate": 98.60834990059642,
+      "certified_rate": 87.97216699801193,
+      "count": 1006,
+      "share_of_parsed": 13.585415259959486,
+      "strict_answer_f1": 64.10128307742616,
+      "valid_rate": 87.97216699801193
+    },
+    "none": {
+      "answer_f1": 74.98484584958075,
+      "answer_valid_rate": 96.00772698003864,
+      "certified_rate": 67.35350933676754,
+      "count": 1553,
+      "share_of_parsed": 20.97231600270088,
+      "strict_answer_f1": 74.98484584958075,
+      "valid_rate": 96.00772698003864
+    },
+    "query_only": {
+      "answer_f1": 58.6786842719046,
+      "answer_valid_rate": 90.67796610169492,
+      "certified_rate": 88.13559322033899,
+      "count": 118,
+      "share_of_parsed": 1.5935178933153276,
+      "strict_answer_f1": 56.84252607981422,
+      "valid_rate": 88.13559322033899
+    }
+  },
+  "by_mode": {
+    "bridge": {
+      "answer_f1": 76.61060183815302,
+      "answer_valid_rate": 98.7077877325982,
+      "certified_rate": 89.55892487939352,
+      "count": 5804,
+      "share_of_parsed": 78.37947332883186,
+      "strict_answer_f1": 70.36244914659905,
+      "valid_rate": 89.57615437629221
+    },
+    "comparison": {
+      "answer_f1": 74.98484584958075,
+      "answer_valid_rate": 96.00772698003864,
+      "certified_rate": 67.35350933676754,
+      "count": 1553,
+      "share_of_parsed": 20.97231600270088,
+      "strict_answer_f1": 74.98484584958075,
+      "valid_rate": 96.00772698003864
+    },
+    "composition": {
+      "answer_f1": 75.0,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 54.166666666666664,
+      "count": 24,
+      "share_of_parsed": 0.3241053342336259,
+      "strict_answer_f1": 54.166666666666664,
+      "valid_rate": 58.333333333333336
+    },
+    "unknown": {
+      "answer_f1": 70.42202917202918,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 91.66666666666667,
+      "count": 24,
+      "share_of_parsed": 0.3241053342336259,
+      "strict_answer_f1": 66.25536250536251,
+      "valid_rate": 91.66666666666667
+    }
+  },
+  "certified_rate": 84.79405806887239,
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "examples": 7405,
+  "parse_rate": 100.0,
+  "parsed": 7405,
+  "predictions": 7405,
+  "valid_rate": 90.83051991897366
+}

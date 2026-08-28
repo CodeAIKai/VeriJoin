@@ -1,0 +1,23 @@
+{
+  "candidate_answer_valid_rate": 94.76623913942905,
+  "candidate_parse_rate": 99.92759619362846,
+  "candidates": 9668,
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "examples": 2417,
+  "examples_with_answer_candidate_rate": 98.01406702523789,
+  "examples_with_correct_candidate_rate": 57.30244104261481,
+  "examples_with_strict_correct_candidate_rate": 43.19404220107571,
+  "global_consensus_answer_em": 50.59991725279272,
+  "global_consensus_answer_f1": 60.84614745644933,
+  "oracle_at_n_answer_em": 57.30244104261481,
+  "oracle_at_n_answer_f1": 66.84656842272645,
+  "oracle_at_n_strict_answer_em": 43.19404220107571,
+  "oracle_at_n_strict_answer_f1": 49.89845166187908,
+  "predictions": 2417,
+  "selected_answer_em": 51.09640049648324,
+  "selected_answer_f1": 61.314258253170294,
+  "tier_consensus_answer_em": 50.84815887463798,
+  "tier_consensus_answer_f1": 61.19235436864712,
+  "uses_gold_labels": true
+}

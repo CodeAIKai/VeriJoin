@@ -1,0 +1,17 @@
+{
+  "model": "/path/to/Qwen2.5-7B-Instruct",
+  "adapter": "/path/to/VeriJoin/artifacts/checkpoints/stage3-12k",
+  "backend": "vllm",
+  "max_model_len": 6656,
+  "max_input_tokens": 6144,
+  "max_new_tokens": 384,
+  "chunk_size": 128,
+  "gpu_memory_utilization": 0.9,
+  "tensor_parallel_size": 1,
+  "seed": 20260825,
+  "hf_batch_size": 2,
+  "num_candidates": 4,
+  "temperature": 0.4,
+  "top_p": 0.95,
+  "execution_guided": true
+}

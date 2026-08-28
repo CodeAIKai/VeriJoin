@@ -1,0 +1,42 @@
+{
+  "attacks": [
+    {
+      "attack": "counterfactual_entity_or_number",
+      "eligible": 11546,
+      "execution_response_rate": 97.2198163866274,
+      "lineage_response_rate": 100.0,
+      "safe": 11546,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "disconnected_evidence",
+      "eligible": 6213,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": null,
+      "safe": 6213,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "distractor_poisoning",
+      "eligible": 11988,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": 100.0,
+      "safe": 11988,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "missing_source",
+      "eligible": 11988,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": 100.0,
+      "safe": 11988,
+      "safe_rate": 100.0
+    }
+  ],
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "examples": 12576,
+  "lineage_certified_programs": 11546,
+  "scope": "post-generation certificate attacks",
+  "valid_programs": 11988
+}

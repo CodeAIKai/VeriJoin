@@ -1,0 +1,12 @@
+{
+  "raw_root": "/path/to/datasets",
+  "candidates_dir": "/path/to/VeriJoin/artifacts/ranker_candidates",
+  "output": "/path/to/VeriJoin/artifacts/checkpoints/meta-ranker.json",
+  "holdout_fraction": 0.1,
+  "hidden_size": 16,
+  "learning_rate": 0.01,
+  "weight_decay": 0.0001,
+  "epochs": 500,
+  "patience": 60,
+  "seed": 20260825
+}

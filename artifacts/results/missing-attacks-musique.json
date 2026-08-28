@@ -1,0 +1,42 @@
+{
+  "attacks": [
+    {
+      "attack": "counterfactual_entity_or_number",
+      "eligible": 1680,
+      "execution_response_rate": 97.91666666666667,
+      "lineage_response_rate": 100.0,
+      "safe": 1680,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "disconnected_evidence",
+      "eligible": 1680,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": null,
+      "safe": 1680,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "distractor_poisoning",
+      "eligible": 1681,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": 100.0,
+      "safe": 1681,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "missing_source",
+      "eligible": 1681,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": 100.0,
+      "safe": 1681,
+      "safe_rate": 100.0
+    }
+  ],
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "examples": 2417,
+  "lineage_certified_programs": 1680,
+  "scope": "post-generation certificate attacks",
+  "valid_programs": 1681
+}

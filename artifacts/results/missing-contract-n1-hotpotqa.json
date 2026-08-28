@@ -1,0 +1,63 @@
+{
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "note": "validator-only ablation on identical generated programs",
+  "predictions": 7405,
+  "variants": [
+    {
+      "accepted": 7149,
+      "accepted_rate": 96.54287643484132,
+      "answer_em": 61.823092505064146,
+      "answer_f1": 75.08206169125289,
+      "examples": 7405,
+      "parsed": 7405,
+      "strict_answer_em": 61.823092505064146,
+      "strict_answer_f1": 75.08206169125289,
+      "variant": "answer_only"
+    },
+    {
+      "accepted": 7146,
+      "accepted_rate": 96.50236326806213,
+      "answer_em": 61.823092505064146,
+      "answer_f1": 75.08206169125289,
+      "examples": 7405,
+      "parsed": 7405,
+      "strict_answer_em": 61.809588116137746,
+      "strict_answer_f1": 75.05955437637556,
+      "variant": "citation_only"
+    },
+    {
+      "accepted": 6298,
+      "accepted_rate": 85.050641458474,
+      "answer_em": 61.823092505064146,
+      "answer_f1": 75.08206169125289,
+      "examples": 7405,
+      "parsed": 7405,
+      "strict_answer_em": 55.611073598919646,
+      "strict_answer_f1": 67.1437801660146,
+      "variant": "no_connectivity"
+    },
+    {
+      "accepted": 6298,
+      "accepted_rate": 85.050641458474,
+      "answer_em": 61.823092505064146,
+      "answer_f1": 75.08206169125289,
+      "examples": 7405,
+      "parsed": 7405,
+      "strict_answer_em": 55.611073598919646,
+      "strict_answer_f1": 67.1437801660146,
+      "variant": "free_literal"
+    },
+    {
+      "accepted": 6298,
+      "accepted_rate": 85.050641458474,
+      "answer_em": 61.823092505064146,
+      "answer_f1": 75.08206169125289,
+      "examples": 7405,
+      "parsed": 7405,
+      "strict_answer_em": 55.611073598919646,
+      "strict_answer_f1": 67.1437801660146,
+      "variant": "full"
+    }
+  ]
+}

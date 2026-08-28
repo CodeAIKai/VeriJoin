@@ -1,0 +1,42 @@
+{
+  "attacks": [
+    {
+      "attack": "counterfactual_entity_or_number",
+      "eligible": 6279,
+      "execution_response_rate": 96.86255773212295,
+      "lineage_response_rate": 100.0,
+      "safe": 6279,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "disconnected_evidence",
+      "eligible": 5188,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": null,
+      "safe": 5188,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "distractor_poisoning",
+      "eligible": 6725,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": 100.0,
+      "safe": 6725,
+      "safe_rate": 100.0
+    },
+    {
+      "attack": "missing_source",
+      "eligible": 6726,
+      "execution_response_rate": 100.0,
+      "lineage_response_rate": 100.0,
+      "safe": 6726,
+      "safe_rate": 100.0
+    }
+  ],
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "examples": 7405,
+  "lineage_certified_programs": 6279,
+  "scope": "post-generation certificate attacks",
+  "valid_programs": 6726
+}

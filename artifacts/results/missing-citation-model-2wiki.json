@@ -1,0 +1,12 @@
+{
+  "answer_em": 73.89472010178118,
+  "answer_f1": 80.02370884299343,
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "evidence_f1": 94.77434973141072,
+  "examples": 12576,
+  "parse_rate": 100.0,
+  "predictions": 12576,
+  "task": "citation",
+  "valid_citation_rate": 99.97614503816794
+}

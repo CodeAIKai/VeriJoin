@@ -1,0 +1,43 @@
+{
+  "config": {
+    "adapter": "/path/to/VeriJoin/artifacts/checkpoints/stage3-12k",
+    "backend": "vllm",
+    "chunk_size": 128,
+    "dataset_variant": null,
+    "execution_guided": true,
+    "gpu_memory_utilization": 0.9,
+    "hf_batch_size": 2,
+    "max_examples": null,
+    "max_input_tokens": 6144,
+    "max_model_len": 6656,
+    "max_new_tokens": 384,
+    "model": "/path/to/Qwen2.5-7B-Instruct",
+    "num_candidates": 4,
+    "seed": 20260825,
+    "skip_overlength": false,
+    "temperature": 0.4,
+    "tensor_parallel_size": 1,
+    "top_p": 0.95
+  },
+  "dataset": "musique",
+  "split": "dev",
+  "status": "complete",
+  "summary": {
+    "dataset": "musique",
+    "dataset_variant": "default",
+    "engine_init_seconds": 21.760124903172255,
+    "examples_per_second": 2.256289124793835,
+    "generation_seconds": 1071.2279616296291,
+    "new_input_tokens": 7781684,
+    "new_output_tokens": 1684433,
+    "newly_written": 2417,
+    "output": "artifacts/predictions/stage3-musique-full-fixed-n4.jsonl",
+    "output_tokens_per_second": 1572.4318822274945,
+    "previously_complete": 0,
+    "render_seconds": 12.994115576148033,
+    "skipped_overlength": 0,
+    "skipped_overlength_ids": [],
+    "split": "dev",
+    "total_examples": 2417
+  }
+}

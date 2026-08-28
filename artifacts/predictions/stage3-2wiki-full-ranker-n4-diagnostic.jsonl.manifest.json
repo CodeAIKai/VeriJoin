@@ -1,0 +1,12 @@
+{
+  "batch_size": 64,
+  "dataset": "2wiki",
+  "dataset_variant": null,
+  "derived_from": "artifacts/predictions/stage3-2wiki-full-guided-n4.jsonl",
+  "max_length": 512,
+  "ranker_adapter": "artifacts/checkpoints/ranker-bge-lora",
+  "ranker_model": "/path/to/bge-reranker-v2-m3",
+  "split": "dev",
+  "status": "complete",
+  "uses_gold_labels": false
+}

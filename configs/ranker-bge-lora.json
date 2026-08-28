@@ -1,0 +1,16 @@
+{
+  "model": "/path/to/bge-reranker-v2-m3",
+  "train_file": "/path/to/VeriJoin/artifacts/ranker_data/train-pairs.jsonl",
+  "eval_file": "/path/to/VeriJoin/artifacts/ranker_data/holdout-pairs.jsonl",
+  "output_dir": "/path/to/VeriJoin/artifacts/checkpoints/ranker-bge-lora",
+  "max_length": 512,
+  "learning_rate": 0.0001,
+  "epochs": 3,
+  "batch_size": 8,
+  "gradient_accumulation": 4,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "warmup_ratio": 0.05,
+  "seed": 20260825
+}

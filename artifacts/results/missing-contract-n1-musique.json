@@ -1,0 +1,63 @@
+{
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "note": "validator-only ablation on identical generated programs",
+  "predictions": 2417,
+  "variants": [
+    {
+      "accepted": 2297,
+      "accepted_rate": 95.03516756309475,
+      "answer_em": 50.02068680182044,
+      "answer_f1": 59.77181844783859,
+      "examples": 2417,
+      "parsed": 2414,
+      "strict_answer_em": 50.02068680182044,
+      "strict_answer_f1": 59.77181844783859,
+      "variant": "answer_only"
+    },
+    {
+      "accepted": 2296,
+      "accepted_rate": 94.99379395945387,
+      "answer_em": 50.02068680182044,
+      "answer_f1": 59.77181844783859,
+      "examples": 2417,
+      "parsed": 2414,
+      "strict_answer_em": 50.02068680182044,
+      "strict_answer_f1": 59.74423604541133,
+      "variant": "citation_only"
+    },
+    {
+      "accepted": 1419,
+      "accepted_rate": 58.709143566404634,
+      "answer_em": 50.02068680182044,
+      "answer_f1": 59.77181844783859,
+      "examples": 2417,
+      "parsed": 2414,
+      "strict_answer_em": 34.29871741828713,
+      "strict_answer_f1": 40.71352075864732,
+      "variant": "no_connectivity"
+    },
+    {
+      "accepted": 1407,
+      "accepted_rate": 58.21266032271411,
+      "answer_em": 50.02068680182044,
+      "answer_f1": 59.77181844783859,
+      "examples": 2417,
+      "parsed": 2414,
+      "strict_answer_em": 33.96772858916012,
+      "strict_answer_f1": 40.33150448502989,
+      "variant": "free_literal"
+    },
+    {
+      "accepted": 1407,
+      "accepted_rate": 58.21266032271411,
+      "answer_em": 50.02068680182044,
+      "answer_f1": 59.77181844783859,
+      "examples": 2417,
+      "parsed": 2414,
+      "strict_answer_em": 33.96772858916012,
+      "strict_answer_f1": 40.33150448502989,
+      "variant": "full"
+    }
+  ]
+}

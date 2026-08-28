@@ -1,0 +1,22 @@
+{
+  "model": "/path/to/Qwen2.5-7B-Instruct",
+  "train_file": "/path/to/VeriJoin/artifacts/sft/smoke.jsonl",
+  "eval_file": null,
+  "output_dir": "/path/to/VeriJoin/artifacts/checkpoints/smoke",
+  "max_length": 2048,
+  "learning_rate": 0.00015,
+  "epochs": 1.0,
+  "batch_size": 1,
+  "gradient_accumulation": 1,
+  "lora_rank": 64,
+  "lora_alpha": 128,
+  "lora_dropout": 0.05,
+  "warmup_ratio": 0.0,
+  "logging_steps": 1,
+  "save_steps": 10,
+  "eval_steps": 10,
+  "eval_max_examples": 0,
+  "max_steps": 1,
+  "balance_datasets": true,
+  "seed": 20260825
+}

@@ -1,0 +1,89 @@
+{
+  "allow_literal": false,
+  "by_answer_operator": {
+    "bool": {
+      "answer_f1": 0.0,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 0.0,
+      "count": 2,
+      "share_of_parsed": 0.08274720728175423,
+      "strict_answer_f1": 0.0,
+      "valid_rate": 50.0
+    },
+    "common": {
+      "answer_f1": 0.0,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 100.0,
+      "count": 1,
+      "share_of_parsed": 0.04137360364087712,
+      "strict_answer_f1": 0.0,
+      "valid_rate": 100.0
+    },
+    "copy": {
+      "answer_f1": 61.58841461871511,
+      "answer_valid_rate": 98.05302402651202,
+      "certified_rate": 69.55260977630489,
+      "count": 2414,
+      "share_of_parsed": 99.87587918907737,
+      "strict_answer_f1": 46.7335916822848,
+      "valid_rate": 69.55260977630489
+    }
+  },
+  "by_join_family": {
+    "both": {
+      "answer_f1": 61.91287442649951,
+      "answer_valid_rate": 97.97930014785608,
+      "certified_rate": 68.5066535239034,
+      "count": 2029,
+      "share_of_parsed": 83.94704178733967,
+      "strict_answer_f1": 46.36517181423307,
+      "valid_rate": 68.55593888615081
+    },
+    "equi_only": {
+      "answer_f1": 59.56901984033768,
+      "answer_valid_rate": 98.44961240310077,
+      "certified_rate": 74.67700258397933,
+      "count": 387,
+      "share_of_parsed": 16.011584609019447,
+      "strict_answer_f1": 48.42366074924215,
+      "valid_rate": 74.67700258397933
+    },
+    "query_only": {
+      "answer_f1": 0.0,
+      "answer_valid_rate": 100.0,
+      "certified_rate": 100.0,
+      "count": 1,
+      "share_of_parsed": 0.04137360364087712,
+      "strict_answer_f1": 0.0,
+      "valid_rate": 100.0
+    }
+  },
+  "by_mode": {
+    "bridge": {
+      "answer_f1": 63.06309434216489,
+      "answer_valid_rate": 97.90915645277578,
+      "certified_rate": 81.47080028839221,
+      "count": 1387,
+      "share_of_parsed": 57.385188249896565,
+      "strict_answer_f1": 56.16782066606932,
+      "valid_rate": 81.47080028839221
+    },
+    "composition": {
+      "answer_f1": 59.42322430776244,
+      "answer_valid_rate": 98.25242718446601,
+      "certified_rate": 53.398058252427184,
+      "count": 1030,
+      "share_of_parsed": 42.614811750103435,
+      "strict_answer_f1": 33.893323356502265,
+      "valid_rate": 53.49514563106796
+    }
+  },
+  "certified_rate": 69.50765411667356,
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "examples": 2417,
+  "parse_rate": 100.0,
+  "parsed": 2417,
+  "predictions": 2417,
+  "valid_rate": 69.54902772031444
+}
