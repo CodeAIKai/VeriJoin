@@ -1,8 +1,8 @@
 {
   "model": "/path/to/Qwen2.5-7B-Instruct",
-  "train_file": "/path/to/VeriJoin/artifacts/sft/smoke.jsonl",
+  "train_file": "/path/to/verijoin/artifacts/sft/smoke.jsonl",
   "eval_file": null,
-  "output_dir": "/path/to/VeriJoin/artifacts/checkpoints/smoke",
+  "output_dir": "/path/to/verijoin/artifacts/checkpoints/smoke",
   "max_length": 2048,
   "learning_rate": 0.00015,
   "epochs": 1.0,

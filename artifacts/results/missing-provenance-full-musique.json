@@ -1,0 +1,22 @@
+{
+  "baseline_scope": {
+    "blip": "one-pass deletion proxy with deterministic VM replay; replay cost is a favorable lower bound, provenance is not; not the official implementation",
+    "groundedcache": "official exact-repeat gate semantics with each benchmark document as a chunk; query/evidence/support gates pass and source-version gate decides"
+  },
+  "blip_style_extra_calls_per_example": 94.32125088841507,
+  "blip_style_mean_bytes": 512.4314143567875,
+  "blip_style_mean_cells": 2.915422885572139,
+  "blip_style_p50_ms": 6.94997,
+  "blip_style_replay_success_rate": 100.0,
+  "dataset": "musique",
+  "examples": 2417,
+  "groundedcache_relevant_update_unsafe_hit_rate": 0.0,
+  "groundedcache_same_document_false_invalidation_rate": 100.0,
+  "groundedcache_version_check_p50_us": 9.273,
+  "valid_programs": 1407,
+  "verijoin_bind_p50_us": 210.78,
+  "verijoin_mean_bytes": 867.6318407960199,
+  "verijoin_mean_cells": 5.046908315565032,
+  "verijoin_same_document_false_invalidation_rate": 0.0,
+  "verijoin_verify_p50_us": 7.335
+}

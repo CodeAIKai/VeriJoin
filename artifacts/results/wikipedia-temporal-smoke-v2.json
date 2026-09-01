@@ -1,0 +1,65 @@
+{
+  "api_endpoint": "https://en.wikipedia.org/w/api.php",
+  "cell_definition": "unique non-markup wikitext lines with at least 20 characters",
+  "document_version_recompute_rate": 100.0,
+  "earliest_revision": "2025-07-21T11:30:42Z",
+  "fetched_at": "2026-08-25T12:36:21.245811+00:00",
+  "irrelevant_update_preservation_rate": 100.0,
+  "latest_revision": "2026-08-18T05:59:53Z",
+  "pages": [
+    {
+      "dataset": "hotpotqa",
+      "dependency_cells": 1,
+      "events": 1,
+      "recomputations": 0,
+      "title": "Scout Tufankjian"
+    },
+    {
+      "dataset": "hotpotqa",
+      "dependency_cells": 1,
+      "events": 1,
+      "recomputations": 0,
+      "title": "Christopher Robin (film)"
+    },
+    {
+      "dataset": "2wiki",
+      "dependency_cells": 2,
+      "events": 1,
+      "recomputations": 0,
+      "title": "Maana Ke Hum Yaar Nahin"
+    },
+    {
+      "dataset": "2wiki",
+      "dependency_cells": 2,
+      "events": 1,
+      "recomputations": 0,
+      "title": "The Goldcabbage Family Breaks the Bank"
+    },
+    {
+      "dataset": "musique",
+      "dependency_cells": 1,
+      "events": 1,
+      "recomputations": 0,
+      "title": "Derek Jeter"
+    },
+    {
+      "dataset": "musique",
+      "dependency_cells": 1,
+      "events": 1,
+      "recomputations": 0,
+      "title": "Common sense"
+    }
+  ],
+  "pages_with_two_revisions": 6,
+  "real_changed_events": 6,
+  "recomputation_reduction_vs_document_version": 100.0,
+  "relevant_update_detection_rate": 0.0,
+  "requested_titles": 6,
+  "resolved_pages": 6,
+  "revision_events": 6,
+  "sampling": "benchmark-linked titles and pre-update hash-selected read cells",
+  "selected_changed_cells": 0,
+  "selected_read_cells": 8,
+  "verijoin_recomputations": 0,
+  "verijoin_recompute_rate": 0.0
+}

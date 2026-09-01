@@ -1,6 +1,6 @@
 {
   "model": "/path/to/Qwen2.5-7B-Instruct",
-  "adapter": "/path/to/VeriJoin/artifacts/checkpoints/verijoin-qwen2.5-7b",
+  "adapter": "/path/to/verijoin/artifacts/checkpoints/verijoin-qwen2.5-7b",
   "backend": "vllm",
   "max_model_len": 6656,
   "max_input_tokens": 6144,

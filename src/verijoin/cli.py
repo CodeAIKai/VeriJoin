@@ -16,6 +16,7 @@ from .contract_ablation import evaluate_contract_ablation
 from .data import iter_examples
 from .evaluate import evaluate_predictions
 from .evaluate import summary_dict as evaluation_summary_dict
+from .historical_replay import evaluate_hotpot_history
 from .infer import InferenceConfig, reselect_predictions, run_inference
 from .infer import summary_dict as inference_summary_dict
 from .meta_ranker import MetaConfig, reselect_with_meta_ranker, train_meta_ranker
@@ -33,6 +34,7 @@ from .temporal_wikipedia import (
 )
 from .update_eval import evaluate_updates
 from .update_eval import summary_dict as update_summary_dict
+from .update_stress import evaluate_update_stress
 
 DATASETS = ("hotpotqa", "2wiki", "musique")
 
@@ -90,6 +92,11 @@ def _parser() -> argparse.ArgumentParser:
     reselect.add_argument("--source", type=Path, required=True)
     reselect.add_argument("--output", type=Path, required=True)
     reselect.add_argument("--selection", choices=("execution", "likelihood"), required=True)
+    reselect.add_argument(
+        "--task",
+        choices=("program", "answer", "citation", "free_literal"),
+        default="program",
+    )
     reselect.add_argument("--dataset-variant", choices=("distractor", "fullwiki"))
 
     candidate_eval = commands.add_parser(
@@ -155,6 +162,18 @@ def _parser() -> argparse.ArgumentParser:
     updates.add_argument("--limit", type=int)
     updates.add_argument("--dataset-variant", choices=("distractor", "fullwiki"))
     updates.add_argument("--report", type=Path)
+
+    update_stress = commands.add_parser(
+        "evaluate-update-stress",
+        help="evaluate actual certified programs under five counterfactual update classes",
+    )
+    update_stress.add_argument("--raw-root", type=Path, required=True)
+    update_stress.add_argument("--split", default="dev")
+    update_stress.add_argument("--dataset", choices=DATASETS, required=True)
+    update_stress.add_argument("--predictions", type=Path, required=True)
+    update_stress.add_argument("--limit", type=int)
+    update_stress.add_argument("--dataset-variant", choices=("distractor", "fullwiki"))
+    update_stress.add_argument("--report", type=Path)
 
     ablation = commands.add_parser(
         "evaluate-contracts", help="ablate answer, citation, join, and literal contracts"
@@ -259,6 +278,15 @@ def _parser() -> argparse.ArgumentParser:
     temporal.add_argument("--cache", type=Path, required=True)
     temporal.add_argument("--report", type=Path)
 
+    history = commands.add_parser(
+        "evaluate-hotpot-history",
+        help="evaluate actual certified HotpotQA programs on snapshot-era revisions",
+    )
+    history.add_argument("--raw-root", type=Path, required=True)
+    history.add_argument("--predictions", type=Path, required=True)
+    history.add_argument("--history", type=Path, required=True)
+    history.add_argument("--report", type=Path)
+
     ablation_data = commands.add_parser(
         "build-ablation-data", help="rewrite identical SFT rows for an output-contract baseline"
     )
@@ -357,6 +385,7 @@ def main() -> None:
             args.source,
             args.output,
             execution_guided=args.selection == "execution",
+            task=args.task,
             dataset_variant=args.dataset_variant,
         )
         _json({"examples": count, "output": str(args.output), "selection": args.selection})
@@ -436,6 +465,23 @@ def main() -> None:
             dataset_variant=args.dataset_variant,
         )
         payload = update_summary_dict(summary)
+        if args.report is not None:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+        _json(payload)
+        return
+    if args.command == "evaluate-update-stress":
+        payload = evaluate_update_stress(
+            args.dataset,
+            args.raw_root,
+            args.split,
+            args.predictions,
+            limit=args.limit,
+            dataset_variant=args.dataset_variant,
+        )
         if args.report is not None:
             args.report.parent.mkdir(parents=True, exist_ok=True)
             args.report.write_text(
@@ -580,6 +626,18 @@ def main() -> None:
             batch_size=args.batch_size,
         )
         payload = evaluate_revision_stream(stream)
+        if args.report is not None:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+        _json(payload)
+        return
+    if args.command == "evaluate-hotpot-history":
+        payload = evaluate_hotpot_history(
+            args.raw_root, args.predictions, args.history
+        )
         if args.report is not None:
             args.report.parent.mkdir(parents=True, exist_ok=True)
             args.report.write_text(

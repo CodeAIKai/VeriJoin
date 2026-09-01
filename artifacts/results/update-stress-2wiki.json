@@ -1,0 +1,76 @@
+{
+  "certified_programs": 11546,
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "examples": 12576,
+  "safety_policy": "content updates use exact read-cell hashes; any insertion or deletion changes the candidate-context cell-ID domain and conservatively requests recompilation",
+  "scope": "deterministic counterfactual updates applied to every eligible lineage-certified program; repaired-program results are oracle diagnostics and never used for routing",
+  "update_classes": {
+    "answer_value_replacement": {
+      "eligible": 11546,
+      "expected_action": "recompile",
+      "expected_action_hits": 11546,
+      "expected_action_rate": 100.0,
+      "oracle_answer_change_rate": 71.43229392860245,
+      "oracle_answer_changed": 8224,
+      "oracle_repair_valid": 11513,
+      "oracle_repair_valid_rate": 99.71418673133553,
+      "recompile": 11546,
+      "replay": 0,
+      "reuse": 0
+    },
+    "sentence_deletion": {
+      "eligible": 11546,
+      "expected_action": "recompile",
+      "expected_action_hits": 11546,
+      "expected_action_rate": 100.0,
+      "oracle_answer_change_rate": 0.0,
+      "oracle_answer_changed": 0,
+      "oracle_repair_valid": 0,
+      "oracle_repair_valid_rate": 0.0,
+      "recompile": 11546,
+      "replay": 0,
+      "reuse": 0
+    },
+    "sentence_insertion": {
+      "eligible": 11546,
+      "expected_action": "recompile",
+      "expected_action_hits": 11546,
+      "expected_action_rate": 100.0,
+      "oracle_answer_change_rate": 0.0,
+      "oracle_answer_changed": 0,
+      "oracle_repair_valid": 0,
+      "oracle_repair_valid_rate": 0.0,
+      "recompile": 11546,
+      "replay": 0,
+      "reuse": 0
+    },
+    "unread_cell_update": {
+      "eligible": 11546,
+      "expected_action": "reuse",
+      "expected_action_hits": 11546,
+      "expected_action_rate": 100.0,
+      "oracle_answer_change_rate": 0.0,
+      "oracle_answer_changed": 0,
+      "oracle_repair_valid": 0,
+      "oracle_repair_valid_rate": 0.0,
+      "recompile": 0,
+      "replay": 0,
+      "reuse": 11546
+    },
+    "value_preserving_rewrite": {
+      "eligible": 11546,
+      "expected_action": "replay",
+      "expected_action_hits": 11546,
+      "expected_action_rate": 100.0,
+      "oracle_answer_change_rate": 0.0,
+      "oracle_answer_changed": 0,
+      "oracle_repair_valid": 0,
+      "oracle_repair_valid_rate": 0.0,
+      "recompile": 0,
+      "replay": 11546,
+      "reuse": 0
+    }
+  },
+  "valid_programs": 11988
+}

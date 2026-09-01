@@ -1,105 +1,125 @@
-# VeriJoin Artifact
+# VeriJoin
 
-This directory is the lightweight submission artifact for **VeriJoin: Executable Lineage for Selective Maintenance of Learned Text Joins**. It contains the implementation, configurations, tests, compact reports, and full per-example predictions used by the final paper tables. It deliberately excludes third-party benchmark corpora, the Qwen2.5-7B-Instruct base model, trained checkpoints, and virtual environments.
+VeriJoin is a clean-room implementation for the new VLDB direction. It does **not** implement
+HopCover, summary routing, ChainClosure, or any result from the rejected/non-full experiments.
 
-## What is included
+The research hypothesis is that a trained 7B model should act as a compiler rather than a free-form
+reasoner. It emits a small program whose source pointers are exact quotes from displayed sentences,
+document titles, or the question. The VM late-binds quotes to offsets, executes typed reducers
+(`argmin`, `argmax`, `equal`, `common`), distinguishes evidence equi-joins from query-constant
+joins, checks lineage connectivity, and fails closed. This makes an intermediate entity a replayable
+data item instead of an unverifiable chain-of-thought string. After successful execution,
+`bind_lineage` records SHA-256 versions for every question/title/sentence cell actually read plus
+an ordered document/sentence-count structural digest. `verify_lineage` detects relevant content
+changes and conservatively recompiles after insertions/deletions, while ignoring content edits to
+unreferenced distractors when the identifier domain is stable.
 
-- `src/verijoin/`: dataset adapters, typed IR, VM, compiler/evaluator, exact lineage, update controller, training and inference code.
-- `tests/`: 50 unit and integration tests for parsing, execution, maintenance, evaluation and statistical routines.
-- `configs/`: all staged QLoRA and full-split inference configurations.
-- `scripts/`: orchestration scripts for the uncapped N=1/N=4 development runs.
-- `artifacts/results/`: lightweight final reports supporting the paper tables.
-- `artifacts/predictions/`: full final N=1/N=4, selector, and same-backbone per-example predictions plus run manifests.
-- `docs/`: correctness contract, complete results, literature and internal method audit.
-- `README_ORIGINAL.md`: the working-server README, retained for command-level detail. Its absolute paths are examples from the authors' machine and must be replaced locally.
+## Evaluation contract
 
-All tracked files are source code or text artifacts. For this English-only public release, four
-repeated non-English name aliases in saved quote fields were normalized to their English
-romanization; the predictions, scores, and execution decisions were otherwise unchanged.
+- Main local benchmark: every labeled official development example, not a sample.
+- HotpotQA distractor validation: 7,405 questions.
+- 2WikiMultiHopQA development: 12,576 questions.
+- MuSiQue answerable development: 2,417 questions.
+- Blind test numbers are reported only after an official leaderboard submission.
+- Closed-context and open-corpus retrieval results are kept in separate tables.
+- Official-style Answer EM/F1 scores the grounded answer expression independently of proof
+validity, as the benchmark scorers do. Strict Answer EM/F1 additionally treats disconnected or
+otherwise invalid proofs as fail-closed abstentions. Both are always reported.
+- Lineage-certified coverage and conditional Answer EM/F1 are separate again: only successful
+  `copy/argmin/argmax/equal/common` executions qualify. A learned `bool` can be valid and grounded
+  in cited evidence, but is never mislabeled as a deterministically certified answer.
+- HotpotQA and 2Wiki report sentence evidence and official-style joint metrics; MuSiQue reports
+  supporting-document metrics. A fullwiki evidence score is only computed on examples whose gold
+  documents occur in the supplied retrieved context, and is never mixed with distractor results.
 
-## Scope and data contract
-
-The reported local evaluation covers every labeled official development example:
-
-| Dataset | Split | Questions |
-|---|---|---:|
-| HotpotQA distractor | validation | 7,405 |
-| 2WikiMultiHopQA | development | 12,576 |
-| MuSiQue answerable | development | 2,417 |
-| **Total** | | **22,398** |
-
-The artifact does not redistribute these datasets. Obtain them from their official distributions and place them under one local root, referred to below as `$VERIJOIN_DATA_ROOT`. Dataset licenses and terms remain those of the original publishers.
-
-## Environment
-
-Recommended: Linux, Python 3.10+, CUDA-capable PyTorch for training/inference, and enough storage for the external model and benchmark files. The deterministic VM, reports and tests run without a GPU.
-
-```bash
-python -m venv .venv
-.venv/bin/pip install -e '.[dev]'
-.venv/bin/pytest -q
-.venv/bin/ruff check src tests
-```
-
-The reference training run used one 32 GB RTX 5090, Qwen2.5-7B-Instruct, NF4 QLoRA rank 64, BF16 compute, response-only loss and gradient checkpointing. The paper reports observed hardware/runtime rather than claiming hardware invariance.
-
-## Minimal deterministic checks
+## Quick start
 
 ```bash
-export VERIJOIN_DATA_ROOT=/absolute/path/to/datasets
-.venv/bin/verijoin count --raw-root "$VERIJOIN_DATA_ROOT" --split dev
-.venv/bin/verijoin audit --raw-root "$VERIJOIN_DATA_ROOT" --split dev
-.venv/bin/pytest -q
+cd /path/to/verijoin
+export PYTHONPATH="$PWD/src"
+python -m verijoin.cli count --raw-root /path/to/datasets --split dev
+python -m verijoin.cli audit --raw-root /path/to/datasets --split dev
+pytest
 ```
 
-The test suite checks fail-closed binding, typed reducers, query/evidence joins, cell-version lineage, refresh transitions, attacks, metrics and paired significance. It does not download external data.
-
-## Training and uncapped evaluation
-
-The staged training configurations are `configs/stage1-2k-qlora.json`, `configs/stage2-6k-qlora.json`, and `configs/stage3-12k-qlora.json`. The final uncapped inference configurations are `configs/stage3-infer-full.json` and `configs/stage3-guided-full.json`.
-
-Before running, replace machine-specific `model`, `adapter`, input and output paths in the JSON configurations. Then follow `README_ORIGINAL.md` and:
+Build the deterministic train/holdout partitions:
 
 ```bash
-PYTHONPATH=src .venv/bin/python -m verijoin.cli train --config configs/stage3-12k-qlora.json
-bash scripts/run_full_dev.sh
-bash scripts/run_fixed_n4_dev.sh
+./.venv/bin/python -m verijoin.cli build-sft \
+  --raw-root /path/to/datasets \
+  --output artifacts/sft/train.v3.jsonl \
+  --partition train --strict
+./.venv/bin/python -m verijoin.cli build-sft \
+  --raw-root /path/to/datasets \
+  --output artifacts/sft/holdout.v3.jsonl \
+  --partition holdout --strict
+./.venv/bin/python -m verijoin.cli filter-lengths \
+  --model /path/to/Qwen2.5-7B-Instruct \
+  --input artifacts/sft/train.v3.jsonl \
+  --output artifacts/sft/train.v3.max6656.jsonl \
+  --max-length 6656
 ```
 
-These are expensive commands. They require the externally obtained datasets, base model, constructed SFT files and the selected adapter. Candidate selection never reads gold answers or supporting facts.
+Training is intentionally launched only after the compiler coverage audit passes. The supplied
+configuration uses Qwen2.5-7B-Instruct with NF4 QLoRA, rank 64, response-only loss, BF16 compute,
+operator-aware balanced sampling, and gradient checkpointing on the local 32GB RTX 5090.
+`configs/pilot-qlora.json` is the short end-to-end gate; `stage1-2k-qlora.json` and
+`stage2-6k-qlora.json` are learning-curve checkpoints. `stage3-12k-qlora.json` is the final staged
+configuration and points to the corrected v3 files. `stage3-infer-full.json` has no example cap;
+`stage3-fullwiki-full.json` is a separately labelled HotpotQA retrieval-stress run.
+`stage3-guided-200.json` smoke-tests four-candidate VM-guided decoding for runtime compatibility;
+its score does not determine whether the pre-registered uncapped run is reported. Candidate selection
+uses only executable validity, normalized answer consensus, and model likelihood; it never reads gold
+answers or supporting facts. The single-candidate greedy run is retained as the compute-matched
+ablation.
 
-## Paper-to-artifact map
+The final checkpoint is selected only by the balanced 2% holdout drawn from the official training
+splits. Development diagnostics are not used for checkpoint selection. The pre-registered greedy
+N=1 and VM-guided N=4 settings are both evaluated on every labeled development example and both
+are reported, including token and wall-clock costs; the N=4 result is not conditionally hidden when
+it loses.
 
-| Paper result | Included report pattern |
-|---|---|
-| Completeness and full N=4 results | `stage3-*-full-fixed-execution-n4.json` |
-| N=1 contract and N=4 contract | `missing-contract-n1-*.json`, `missing-contract-*.json` |
-| Same-backbone answer/citation/free-literal baselines | `missing-answer-model-*.json`, `missing-citation-model-*.json`, `missing-free-literal-model-*.json` |
-| Contract ladder and diagnostics | `missing-contract-*.json`, `missing-operators-*.json` |
-| Post-generation attacks | `missing-attacks-*.json` |
-| Synthetic update maintenance | `missing-updates-n4-*.json` |
-| Real Wikipedia revisions | `missing-wikipedia-temporal-certified-150x5.json` |
-| Provenance/cache comparison | `missing-provenance-certified-full-*.json` |
-| Paired significance | `missing-paired-*.json`, `missing-significance-n4-vs-n1-*.json` |
-| Candidate selector analyses | `stage3-*-full-*.json` |
+The final v3 length-filtered files contain 267,364 training rows and 5,437 holdout rows. A streaming
+ID audit found zero train/holdout overlap and zero overlap between either file and the 22,398 labeled
+development examples.
 
-The compact reports contain aggregates; `artifacts/predictions` contains the corresponding final per-example JSONL files and manifests. Obsolete 200-example, wrong-prompt, and pre-fix engineering runs are excluded. Checkpoints/adapters should be deposited as a separate versioned release with checksums when redistribution is permitted.
+```bash
+PYTHONPATH=src ./.venv/bin/python -m verijoin.cli train --config configs/pilot-qlora.json
+PYTHONPATH=src ./.venv-infer/bin/python -m verijoin.cli infer \
+  --config configs/pilot-infer.json --raw-root /path/to/datasets \
+  --dataset hotpotqa --split dev --output artifacts/predictions/pilot-hotpotqa.jsonl
+PYTHONPATH=src ./.venv/bin/python -m verijoin.cli evaluate \
+  --raw-root /path/to/datasets --dataset hotpotqa --split dev \
+  --predictions artifacts/predictions/pilot-hotpotqa.jsonl \
+  --report artifacts/results/pilot-hotpotqa.json
+```
 
-## Omitted files and why
+After choosing the checkpoint from training-holdout loss and updating the two full inference configs,
+`scripts/run_full_dev.sh` executes the pre-registered N=1/N=4 protocols, the zero-call likelihood
+re-selection ablation, official-style metrics, strict/certified metrics, and update diagnostics for all
+22,398 labeled development examples.
 
-- Base model and tokenizer: externally licensed Qwen2.5-7B-Instruct distribution.
-- Benchmark raw data: governed by the original dataset terms.
-- Checkpoints/adapters and optimizer states: tens of GB; archive separately if redistribution is permitted.
-- Virtual environments and caches: machine-specific and reproducible from `pyproject.toml`.
-- Obsolete 200-example or known-wrong-prompt diagnostics: engineering history, not evidence for paper claims.
+## Current status
 
-## Submission checklist
+The parser, typed IR, fail-closed VM, structural lineage digest, refresh controller, staged QLoRA
+training, and CUDA 13.0 vLLM inference path are implemented. Final full-development evaluation
+covers all 22,398 examples with no skipped or truncated inputs. The main N=4 compiler obtains
+Answer/Strict F1 of 76.24/71.27 on HotpotQA, 82.86/80.34 on 2Wiki, and 61.51/46.68 on MuSiQue,
+with deterministic certificate coverage of 84.79%, 91.81%, and 69.51%.
 
-1. Select and add an explicit open-source license approved by all authors.
-2. Replace all absolute local paths and test in a clean environment.
-3. Deposit this code-and-predictions package plus permitted model artifacts in a stable public archival repository.
-4. Record repository URL, release tag/DOI and SHA-256 checksums in the paper and submission form.
-5. PVLDB 2027 is single-blind: keep manuscript author names, while removing unrelated local user names, hostnames, secrets and private URLs from the public artifact.
-6. Re-run the 50 tests and static checks from this packaged directory.
+Equal-budget N=4 answer-only, citation-only, and free-literal controls are complete. They reject a
+universal accuracy-improvement claim: relative to free literal, VeriJoin Strict F1 changes by
+-2.55, +4.55, and -1.46. The method instead establishes a quality/maintainability frontier because
+free literals have zero deterministic certificate coverage. Five update classes execute over every
+eligible certified program with 100% declared-action conformance. An actual-program-linked
+Wikipedia workload routes 315 changed revision events with 303 reuse, 10 replay, and 2 recompile.
+On 600 controlled source-fact changes, recompilation restores 97.62-99.12 Strict F1 and 99.5-100%
+certified coverage; the stale cache has zero EM.
 
-No license is chosen automatically here because that is an author/legal decision.
+Run the final equal-budget controls with `scripts/run_protocol_n4.sh`. Run conditional recovery with
+`scripts/run_recompile_recovery.py` and paired analysis with
+`scripts/analyze_recompile_recovery.py`. See `docs/full_results.md` for complete metrics, exact
+artifact paths, costs, and claim boundaries; `docs/environment.md` records the environment;
+`docs/literature.md` gives setting-matched references; and `docs/correctness.md` defines the exact
+certification property. The final code passes 65 tests and Ruff. These are local development and
+systems results, not blind-test or 7B-SOTA claims.

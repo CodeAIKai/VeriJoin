@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 from collections import Counter
 from collections.abc import Iterable
@@ -11,10 +12,13 @@ from typing import Any, Literal
 from transformers import AutoTokenizer
 
 from .data import iter_examples
+from .output_protocols import parse_citation_output
 from .prompt import inference_messages
 from .schema import Example
 from .text import normalize_answer
 from .vm import execute, parse_program
+
+_ANSWER_OUTPUT = re.compile(r"<ANSWER>\s*(.*?)\s*</ANSWER>", flags=re.DOTALL)
 
 
 @dataclass(frozen=True, slots=True)
@@ -138,8 +142,14 @@ def _select_candidate(
     candidates: list[tuple[str, float]],
     *,
     execution_guided: bool,
+    task: str = "program",
 ) -> tuple[int, dict[str, object]]:
-    """Select without labels: executable tier, answer consensus, then model likelihood."""
+    """Select without labels: protocol validity, answer consensus, then likelihood.
+
+    Each output contract receives only checks available at serving time. This keeps
+    N-way protocol comparisons compute matched without giving answer-only or
+    citation-only candidates access to benchmark labels.
+    """
     if not candidates:
         raise ValueError("at least one candidate is required")
     evaluated: list[tuple[int, int, str, float, bool]] = []
@@ -147,9 +157,13 @@ def _select_candidate(
         tier = 0
         answer = ""
         lineage_certified = False
-        if execution_guided:
+        if execution_guided and task in {"program", "free_literal"}:
             try:
-                result = execute(example, parse_program(candidate))
+                result = execute(
+                    example,
+                    parse_program(candidate),
+                    allow_literal=task == "free_literal",
+                )
                 lineage_certified = result.lineage_certified
                 if result.valid:
                     tier = 2
@@ -158,6 +172,24 @@ def _select_candidate(
                     tier = 1
                     answer = normalize_answer(result.candidate_answer)
             except (ValueError, IndexError, KeyError, TypeError, json.JSONDecodeError):
+                pass
+        elif execution_guided and task == "answer":
+            match = _ANSWER_OUTPUT.search(candidate)
+            if match is not None:
+                answer = normalize_answer(match.group(1).strip())
+                tier = int(bool(answer))
+        elif execution_guided and task == "citation":
+            try:
+                raw_answer, evidence = parse_citation_output(candidate)
+                answer = normalize_answer(raw_answer)
+                tier = int(bool(answer))
+                if answer and evidence and all(
+                    0 <= doc < len(example.documents)
+                    and 0 <= sent < len(example.documents[doc].sentences)
+                    for doc, sent in evidence
+                ):
+                    tier = 2
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError):
                 pass
         evaluated.append((index, tier, answer, average_logprob, lineage_certified))
 
@@ -179,6 +211,7 @@ def _select_candidate(
             eligible = [item for item in eligible if item[2] == best_answer]
         selected = max(eligible, key=lambda item: (item[3], -item[0]))
     return selected[0], {
+        "task": task,
         "selected_index": selected[0],
         "lineage_certified_candidates": sum(item[4] for item in evaluated),
         "strict_valid_candidates": sum(item[1] >= 2 for item in evaluated),
@@ -233,22 +266,23 @@ def run_vllm(
     render_seconds = time.perf_counter() - render_start
     if not pending:
         return InferenceSummary(
-            dataset,
-            config.dataset_variant or ("distractor" if dataset == "hotpotqa" else "default"),
-            split,
-            str(output),
-            total,
-            len(complete),
-            0,
-            0,
-            0,
-            render_seconds,
-            0.0,
-            0.0,
-            len(skipped),
-            skipped,
-            0.0,
-            0.0,
+            dataset=dataset,
+            dataset_variant=config.dataset_variant
+            or ("distractor" if dataset == "hotpotqa" else "default"),
+            split=split,
+            output=str(output),
+            total_examples=total,
+            previously_complete=len(complete),
+            newly_written=0,
+            new_input_tokens=0,
+            new_output_tokens=0,
+            render_seconds=render_seconds,
+            engine_init_seconds=0.0,
+            generation_seconds=0.0,
+            examples_per_second=0.0,
+            output_tokens_per_second=0.0,
+            skipped_overlength=len(skipped),
+            skipped_overlength_ids=skipped,
         )
 
     engine_start = time.perf_counter()
@@ -297,7 +331,10 @@ def run_vllm(
                     for candidate in result.outputs
                 ]
                 selected_index, selection = _select_candidate(
-                    example, candidates, execution_guided=config.execution_guided
+                    example,
+                    candidates,
+                    execution_guided=config.execution_guided,
+                    task=config.task,
                 )
                 selected = result.outputs[selected_index]
                 row = {
@@ -378,22 +415,23 @@ def run_transformers(
     render_seconds = time.perf_counter() - render_start
     if not pending:
         return InferenceSummary(
-            dataset,
-            config.dataset_variant or ("distractor" if dataset == "hotpotqa" else "default"),
-            split,
-            str(output),
-            total,
-            len(complete),
-            0,
-            0,
-            0,
-            render_seconds,
-            0.0,
-            0.0,
-            len(skipped),
-            skipped,
-            0.0,
-            0.0,
+            dataset=dataset,
+            dataset_variant=config.dataset_variant
+            or ("distractor" if dataset == "hotpotqa" else "default"),
+            split=split,
+            output=str(output),
+            total_examples=total,
+            previously_complete=len(complete),
+            newly_written=0,
+            new_input_tokens=0,
+            new_output_tokens=0,
+            render_seconds=render_seconds,
+            engine_init_seconds=0.0,
+            generation_seconds=0.0,
+            examples_per_second=0.0,
+            output_tokens_per_second=0.0,
+            skipped_overlength=len(skipped),
+            skipped_overlength_ids=skipped,
         )
 
     engine_start = time.perf_counter()
@@ -491,10 +529,12 @@ def run_inference(
         "dataset": dataset,
         "split": split,
     }
+    previous_manifest: dict[str, Any] | None = None
     if output.exists() and output.stat().st_size:
         if not manifest_path.exists():
             raise ValueError(f"refusing to resume {output} without a provenance manifest")
         previous = json.loads(manifest_path.read_text(encoding="utf-8"))
+        previous_manifest = previous
         previous_identity = {
             "config": previous.get("config"),
             "dataset": previous.get("dataset", previous.get("summary", {}).get("dataset")),
@@ -512,6 +552,16 @@ def run_inference(
         summary = run_transformers(config, dataset, raw_root, split, output)
     else:
         summary = run_vllm(config, dataset, raw_root, split, output)
+    if (
+        summary.newly_written == 0
+        and previous_manifest is not None
+        and previous_manifest.get("status") == "complete"
+    ):
+        manifest_path.write_text(
+            json.dumps(previous_manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return summary
     manifest = {
         **identity,
         "status": "complete",
@@ -532,6 +582,7 @@ def reselect_predictions(
     output: Path,
     *,
     execution_guided: bool,
+    task: str = "program",
     dataset_variant: str | None = None,
 ) -> int:
     """Re-select stored candidates without another model call or access to supervision."""
@@ -548,7 +599,12 @@ def reselect_predictions(
         candidates = [
             (str(candidate["output"]), float(candidate["average_logprob"])) for candidate in stored
         ]
-        index, selection = _select_candidate(example, candidates, execution_guided=execution_guided)
+        index, selection = _select_candidate(
+            example,
+            candidates,
+            execution_guided=execution_guided,
+            task=task,
+        )
         chosen = stored[index]
         derived = dict(row)
         derived.update(
@@ -576,6 +632,7 @@ def reselect_predictions(
                 "dataset_variant": dataset_variant,
                 "split": split,
                 "execution_guided": execution_guided,
+                "task": task,
                 "examples": len(selected_rows),
                 "additional_model_calls": 0,
             },

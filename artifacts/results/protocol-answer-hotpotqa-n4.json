@@ -1,0 +1,12 @@
+{
+  "answer_em": 64.72653612424038,
+  "answer_f1": 78.96047851807354,
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "evidence_f1": null,
+  "examples": 7405,
+  "parse_rate": 99.9864956110736,
+  "predictions": 7405,
+  "task": "answer",
+  "valid_citation_rate": null
+}

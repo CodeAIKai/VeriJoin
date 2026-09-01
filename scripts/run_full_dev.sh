@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-project_root="/path/to/VeriJoin"
+project_root="/path/to/verijoin"
 raw_root="/path/to/datasets"
 greedy_config="${1:-configs/stage3-infer-full.json}"
 guided_config="${2:-configs/stage3-guided-full.json}"

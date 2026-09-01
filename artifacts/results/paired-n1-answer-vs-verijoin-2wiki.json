@@ -1,0 +1,28 @@
+{
+  "answer_f1": {
+    "bootstrap_samples": 5000,
+    "candidate_losses": 865,
+    "candidate_wins": 1218,
+    "ci95_lower": 2.100079949718266,
+    "ci95_upper": 3.2878086599741287,
+    "examples": 12576,
+    "mean_difference": 2.6894148396590025,
+    "ties": 10493,
+    "two_sided_p": 0.0003999200159968006
+  },
+  "baseline": "artifacts/predictions/ablations/answer-2wiki-full.jsonl",
+  "baseline_answer_f1": 79.26135858587729,
+  "baseline_task": "answer",
+  "candidate": "artifacts/predictions/stage3-2wiki-full-greedy.jsonl",
+  "candidate_answer_f1": 81.95077342553627,
+  "candidate_eligibility_rate": 100.0,
+  "candidate_eligible_examples": 12576,
+  "candidate_task": "program-answer",
+  "compared_examples": 12576,
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "scope": "paired example bootstrap; does not measure training-seed variance",
+  "seed": 20260825,
+  "subset": "all",
+  "total_examples": 12576
+}

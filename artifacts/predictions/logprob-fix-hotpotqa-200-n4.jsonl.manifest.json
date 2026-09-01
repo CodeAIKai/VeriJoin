@@ -1,0 +1,40 @@
+{
+  "config": {
+    "adapter": "/path/to/verijoin/artifacts/checkpoints/stage3-12k",
+    "backend": "vllm",
+    "chunk_size": 128,
+    "dataset_variant": null,
+    "execution_guided": true,
+    "gpu_memory_utilization": 0.9,
+    "hf_batch_size": 2,
+    "max_examples": 200,
+    "max_input_tokens": 6144,
+    "max_model_len": 6656,
+    "max_new_tokens": 384,
+    "model": "/path/to/models/Qwen2.5-7B-Instruct",
+    "num_candidates": 4,
+    "seed": 20260825,
+    "temperature": 0.4,
+    "tensor_parallel_size": 1,
+    "top_p": 0.95
+  },
+  "dataset": "hotpotqa",
+  "split": "dev",
+  "status": "complete",
+  "summary": {
+    "dataset": "hotpotqa",
+    "dataset_variant": "distractor",
+    "engine_init_seconds": 21.354756139218807,
+    "examples_per_second": 3.815005705295917,
+    "generation_seconds": 52.42456118017435,
+    "new_input_tokens": 368503,
+    "new_output_tokens": 104444,
+    "newly_written": 200,
+    "output": "artifacts/predictions/logprob-fix-hotpotqa-200-n4.jsonl",
+    "output_tokens_per_second": 1992.2722794196338,
+    "previously_complete": 0,
+    "render_seconds": 0.8836052864789963,
+    "split": "dev",
+    "total_examples": 200
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "answer_em": 55.192387256930076,
+  "answer_f1": 64.34930359555464,
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "evidence_f1": 38.02502804637593,
+  "examples": 2417,
+  "parse_rate": 100.0,
+  "predictions": 2417,
+  "task": "citation",
+  "valid_citation_rate": 99.95862639635912
+}

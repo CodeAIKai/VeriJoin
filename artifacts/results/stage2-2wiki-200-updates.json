@@ -1,0 +1,19 @@
+{
+  "bind_p50_us": 137.841,
+  "bind_p95_us": 411.546,
+  "corpus_cells": 7160,
+  "dataset": "2wiki",
+  "dataset_variant": "default",
+  "dependency_cells": 735,
+  "examples": 200,
+  "irrelevant_preserved_rate": 100.0,
+  "irrelevant_updates": 174,
+  "mean_snapshot_bytes": 840.2988505747127,
+  "recomputation_reduction_vs_whole_context": 89.73463687150839,
+  "relevant_detected_rate": 100.0,
+  "relevant_updates": 174,
+  "selective_recompute_rate": 10.26536312849162,
+  "valid_programs": 174,
+  "verify_p50_us": 6.307,
+  "verify_p95_us": 8.088
+}

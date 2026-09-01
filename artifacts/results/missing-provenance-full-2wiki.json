@@ -1,0 +1,22 @@
+{
+  "baseline_scope": {
+    "blip": "one-pass deletion proxy with deterministic VM replay; replay cost is a favorable lower bound, provenance is not; not the official implementation",
+    "groundedcache": "official exact-repeat gate semantics with each benchmark document as a chunk; query/evidence/support gates pass and source-version gate decides"
+  },
+  "blip_style_extra_calls_per_example": 42.35727837185236,
+  "blip_style_mean_bytes": 387.5710589858572,
+  "blip_style_mean_cells": 3.324335977923422,
+  "blip_style_p50_ms": 1.403012,
+  "blip_style_replay_success_rate": 100.0,
+  "dataset": "2wiki",
+  "examples": 12576,
+  "groundedcache_relevant_update_unsafe_hit_rate": 0.0,
+  "groundedcache_same_document_false_invalidation_rate": 100.0,
+  "groundedcache_version_check_p50_us": 8.908,
+  "valid_programs": 11596,
+  "verijoin_bind_p50_us": 136.188,
+  "verijoin_mean_bytes": 840.2888927216281,
+  "verijoin_mean_cells": 4.752155915833046,
+  "verijoin_same_document_false_invalidation_rate": 0.0,
+  "verijoin_verify_p50_us": 6.644
+}

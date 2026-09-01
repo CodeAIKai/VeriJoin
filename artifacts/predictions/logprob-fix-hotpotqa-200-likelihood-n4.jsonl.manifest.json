@@ -1,0 +1,9 @@
+{
+  "additional_model_calls": 0,
+  "dataset": "hotpotqa",
+  "dataset_variant": null,
+  "derived_from": "artifacts/predictions/logprob-fix-hotpotqa-200-n4.jsonl",
+  "examples": 200,
+  "execution_guided": false,
+  "split": "dev"
+}

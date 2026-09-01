@@ -1,0 +1,19 @@
+{
+  "bind_p50_us": 157.245,
+  "bind_p95_us": 240.434,
+  "corpus_cells": 7888,
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "dependency_cells": 570,
+  "examples": 200,
+  "irrelevant_preserved_rate": 100.0,
+  "irrelevant_updates": 155,
+  "mean_snapshot_bytes": 791.0709677419355,
+  "recomputation_reduction_vs_whole_context": 92.7738336713996,
+  "relevant_detected_rate": 100.0,
+  "relevant_updates": 155,
+  "selective_recompute_rate": 7.226166328600406,
+  "valid_programs": 155,
+  "verify_p50_us": 5.588,
+  "verify_p95_us": 7.758
+}

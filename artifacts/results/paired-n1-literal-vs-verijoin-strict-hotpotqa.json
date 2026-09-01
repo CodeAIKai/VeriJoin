@@ -1,0 +1,28 @@
+{
+  "answer_f1": {
+    "bootstrap_samples": 5000,
+    "candidate_losses": 971,
+    "candidate_wins": 729,
+    "ci95_lower": -4.0498028906108665,
+    "ci95_upper": -2.3111840858291908,
+    "examples": 7405,
+    "mean_difference": -3.1670371346420167,
+    "ties": 5705,
+    "two_sided_p": 0.0003999200159968006
+  },
+  "baseline": "artifacts/predictions/ablations/free-literal-hotpotqa-full.jsonl",
+  "baseline_answer_f1": 70.31081730065635,
+  "baseline_task": "program-literal",
+  "candidate": "artifacts/predictions/stage3-hotpotqa-full-greedy.jsonl",
+  "candidate_answer_f1": 67.14378016601434,
+  "candidate_eligibility_rate": 100.0,
+  "candidate_eligible_examples": 7405,
+  "candidate_task": "program-strict",
+  "compared_examples": 7405,
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "scope": "paired example bootstrap; does not measure training-seed variance",
+  "seed": 20260825,
+  "subset": "all",
+  "total_examples": 7405
+}

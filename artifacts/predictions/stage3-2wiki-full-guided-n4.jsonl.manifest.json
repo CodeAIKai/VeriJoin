@@ -1,6 +1,6 @@
 {
   "config": {
-    "adapter": "/path/to/VeriJoin/artifacts/checkpoints/stage3-12k",
+    "adapter": "/path/to/verijoin/artifacts/checkpoints/stage3-12k",
     "backend": "vllm",
     "chunk_size": 128,
     "dataset_variant": null,
@@ -11,7 +11,7 @@
     "max_input_tokens": 6144,
     "max_model_len": 6656,
     "max_new_tokens": 384,
-    "model": "/path/to/Qwen2.5-7B-Instruct",
+    "model": "/path/to/models/Qwen2.5-7B-Instruct",
     "num_candidates": 4,
     "seed": 20260825,
     "temperature": 0.4,

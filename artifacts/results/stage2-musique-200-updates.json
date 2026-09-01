@@ -1,0 +1,19 @@
+{
+  "bind_p50_us": 169.399,
+  "bind_p95_us": 261.688,
+  "corpus_cells": 13491,
+  "dataset": "musique",
+  "dataset_variant": "default",
+  "dependency_cells": 537,
+  "examples": 200,
+  "irrelevant_preserved_rate": 100.0,
+  "irrelevant_updates": 151,
+  "mean_snapshot_bytes": 798.4834437086092,
+  "recomputation_reduction_vs_whole_context": 96.01956860128975,
+  "relevant_detected_rate": 100.0,
+  "relevant_updates": 151,
+  "selective_recompute_rate": 3.9804313987102513,
+  "valid_programs": 151,
+  "verify_p50_us": 5.746,
+  "verify_p95_us": 7.573
+}

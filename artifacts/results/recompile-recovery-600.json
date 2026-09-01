@@ -1,0 +1,79 @@
+{
+  "protocol": "label-free execution-guided N=4 recompilation after a source fact changes",
+  "seed": 20260825,
+  "eligible_pool_by_dataset": {
+    "hotpotqa": 464,
+    "2wiki": 523,
+    "musique": 207
+  },
+  "selection_limit_per_dataset": 200,
+  "generation_seconds_including_engine_init": 237.20483895018697,
+  "answer_only_generation_seconds": 110.81938063539565,
+  "datasets": {
+    "hotpotqa": {
+      "cases": 200,
+      "selection": "SHA-256 order over originally correct, lineage-certified copy programs with a mutable numeric/date answer",
+      "mutation": "one deterministic +/-1 numeric or year edit; the old value occurs once and the new value is absent from the full context",
+      "cached_old_answer_em": 0.0,
+      "cached_old_answer_f1": 31.445833333333304,
+      "old_plan_valid_rate_after_update": 0.0,
+      "recompile_parse_rate": 100.0,
+      "recompile_valid_rate": 99.5,
+      "recompile_certified_rate": 99.5,
+      "recompile_candidate_em": 96.5,
+      "recompile_candidate_f1": 98.30000000000001,
+      "recompile_strict_em": 96.0,
+      "recompile_strict_f1": 97.80000000000001
+    },
+    "2wiki": {
+      "cases": 200,
+      "selection": "SHA-256 order over originally correct, lineage-certified copy programs with a mutable numeric/date answer",
+      "mutation": "one deterministic +/-1 numeric or year edit; the old value occurs once and the new value is absent from the full context",
+      "cached_old_answer_em": 0.0,
+      "cached_old_answer_f1": 64.52023809523823,
+      "old_plan_valid_rate_after_update": 0.0,
+      "recompile_parse_rate": 100.0,
+      "recompile_valid_rate": 100.0,
+      "recompile_certified_rate": 100.0,
+      "recompile_candidate_em": 98.5,
+      "recompile_candidate_f1": 99.11666666666667,
+      "recompile_strict_em": 98.5,
+      "recompile_strict_f1": 99.11666666666667
+    },
+    "musique": {
+      "cases": 200,
+      "selection": "SHA-256 order over originally correct, lineage-certified copy programs with a mutable numeric/date answer",
+      "mutation": "one deterministic +/-1 numeric or year edit; the old value occurs once and the new value is absent from the full context",
+      "cached_old_answer_em": 0.0,
+      "cached_old_answer_f1": 38.25,
+      "old_plan_valid_rate_after_update": 0.0,
+      "recompile_parse_rate": 100.0,
+      "recompile_valid_rate": 99.5,
+      "recompile_certified_rate": 99.5,
+      "recompile_candidate_em": 96.0,
+      "recompile_candidate_f1": 98.11785714285716,
+      "recompile_strict_em": 95.5,
+      "recompile_strict_f1": 97.61785714285716
+    }
+  },
+  "answer_only_datasets": {
+    "hotpotqa": {
+      "cases": 200,
+      "parse_rate": 100.0,
+      "answer_em": 89.0,
+      "answer_f1": 94.12380952380953
+    },
+    "2wiki": {
+      "cases": 200,
+      "parse_rate": 100.0,
+      "answer_em": 92.0,
+      "answer_f1": 95.19285714285715
+    },
+    "musique": {
+      "cases": 200,
+      "parse_rate": 100.0,
+      "answer_em": 89.5,
+      "answer_f1": 91.31666666666668
+    }
+  }
+}

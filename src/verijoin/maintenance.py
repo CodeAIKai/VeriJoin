@@ -45,6 +45,13 @@ def refresh_result(
     check = verify_lineage(example, snapshot)
     if check.current:
         return RefreshResult("reuse", cached_answer, snapshot)
+    if check.structure_changed:
+        return RefreshResult(
+            "recompile",
+            "",
+            None,
+            ("source cell-ID domain changed by an insertion or deletion",),
+        )
     if not snapshot.lineage_certified:
         return RefreshResult(
             "recompile",

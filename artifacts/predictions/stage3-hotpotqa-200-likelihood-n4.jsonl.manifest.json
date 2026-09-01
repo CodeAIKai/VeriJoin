@@ -1,0 +1,9 @@
+{
+  "additional_model_calls": 0,
+  "dataset": "hotpotqa",
+  "dataset_variant": null,
+  "derived_from": "artifacts/predictions/stage3-hotpotqa-200-guided-n4.jsonl",
+  "examples": 200,
+  "execution_guided": false,
+  "split": "dev"
+}

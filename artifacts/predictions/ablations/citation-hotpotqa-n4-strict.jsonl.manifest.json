@@ -1,0 +1,10 @@
+{
+  "additional_model_calls": 0,
+  "dataset": "hotpotqa",
+  "dataset_variant": "distractor",
+  "derived_from": "artifacts/predictions/ablations/citation-hotpotqa-n4.jsonl",
+  "examples": 7405,
+  "execution_guided": true,
+  "split": "dev",
+  "task": "citation"
+}

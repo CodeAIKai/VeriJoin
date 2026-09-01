@@ -1,9 +1,9 @@
 {
   "model": "/path/to/Qwen2.5-7B-Instruct",
-  "train_file": "/path/to/VeriJoin/artifacts/sft/ablations/citation.train.v2.max6656.jsonl",
-  "eval_file": "/path/to/VeriJoin/artifacts/sft/ablations/citation.holdout.v2.max6656.jsonl",
-  "output_dir": "/path/to/VeriJoin/artifacts/checkpoints/ablations/citation-stage2-6k",
-  "init_adapter": "/path/to/VeriJoin/artifacts/checkpoints/ablations/citation-stage1-2k",
+  "train_file": "/path/to/verijoin/artifacts/sft/ablations/citation.train.v2.max6656.jsonl",
+  "eval_file": "/path/to/verijoin/artifacts/sft/ablations/citation.holdout.v2.max6656.jsonl",
+  "output_dir": "/path/to/verijoin/artifacts/checkpoints/ablations/citation-stage2-6k",
+  "init_adapter": "/path/to/verijoin/artifacts/checkpoints/ablations/citation-stage1-2k",
   "max_length": 6656,
   "learning_rate": 0.00005,
   "epochs": 1.0,

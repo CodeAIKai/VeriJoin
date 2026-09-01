@@ -15,6 +15,10 @@ artifacts/update-cache/
 *.jpeg
 *.gif
 *.webp
+*.avif
+*.heic
+*.heif
+*.jfif
 *.bmp
 *.tif
 *.tiff

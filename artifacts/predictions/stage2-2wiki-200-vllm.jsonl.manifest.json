@@ -1,0 +1,33 @@
+{
+  "config": {
+    "adapter": "/path/to/verijoin/artifacts/checkpoints/stage2-6k",
+    "backend": "vllm",
+    "chunk_size": 200,
+    "dataset_variant": null,
+    "gpu_memory_utilization": 0.9,
+    "hf_batch_size": 2,
+    "max_examples": 200,
+    "max_input_tokens": 6144,
+    "max_model_len": 6656,
+    "max_new_tokens": 384,
+    "model": "/path/to/models/Qwen2.5-7B-Instruct",
+    "seed": 20260825,
+    "tensor_parallel_size": 1
+  },
+  "summary": {
+    "dataset": "2wiki",
+    "dataset_variant": "default",
+    "engine_init_seconds": 21.29434736073017,
+    "examples_per_second": 7.470764059114352,
+    "generation_seconds": 26.771023474633694,
+    "new_input_tokens": 281527,
+    "new_output_tokens": 29148,
+    "newly_written": 200,
+    "output": "artifacts/predictions/stage2-2wiki-200-vllm.jsonl",
+    "output_tokens_per_second": 1088.7891539753255,
+    "previously_complete": 0,
+    "render_seconds": 0.727505411952734,
+    "split": "dev",
+    "total_examples": 200
+  }
+}

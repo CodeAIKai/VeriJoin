@@ -1,0 +1,22 @@
+{
+  "api_endpoint": "https://en.wikipedia.org/w/api.php",
+  "cell_definition": "unique non-markup wikitext lines with at least 20 characters",
+  "document_version_recompute_rate": 0.0,
+  "earliest_revision": "",
+  "fetched_at": "2026-08-25T12:35:05.401735+00:00",
+  "irrelevant_update_preservation_rate": 0.0,
+  "latest_revision": "",
+  "pages": [],
+  "pages_with_two_revisions": 0,
+  "real_changed_events": 0,
+  "recomputation_reduction_vs_document_version": 100.0,
+  "relevant_update_detection_rate": 0.0,
+  "requested_titles": 6,
+  "resolved_pages": 0,
+  "revision_events": 0,
+  "sampling": "benchmark-linked titles and pre-update hash-selected read cells",
+  "selected_changed_cells": 0,
+  "selected_read_cells": 0,
+  "verijoin_recomputations": 0,
+  "verijoin_recompute_rate": 0.0
+}

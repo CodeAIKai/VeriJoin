@@ -27,6 +27,7 @@ class LineageSnapshot:
     vm_semantics_version: str
     program_sha256: str
     answer_sha256: str
+    structure_sha256: str
     lineage_certified: bool
     cells: tuple[SourceCell, ...]
 
@@ -39,6 +40,7 @@ class LineageCheck:
     current: bool
     changed: tuple[tuple[SourceField, int, int], ...]
     missing: tuple[tuple[SourceField, int, int], ...]
+    structure_changed: bool = False
 
 
 def _digest(value: str) -> str:
@@ -49,6 +51,13 @@ def _program_digest(program: Program) -> str:
     payload = program.to_dict()
     payload.pop("metadata", None)
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return _digest(encoded)
+
+
+def _structure_digest(example: Example) -> str:
+    """Commit the stable cell-ID domain so insertions/deletions fail closed."""
+    shape = [(document.doc, len(document.sentences)) for document in example.documents]
+    encoded = json.dumps(shape, separators=(",", ":"))
     return _digest(encoded)
 
 
@@ -124,6 +133,7 @@ def bind_lineage(example: Example, program: Program) -> LineageSnapshot:
         VM_SEMANTICS_VERSION,
         _program_digest(program),
         _digest(result.answer),
+        _structure_digest(example),
         result.lineage_certified,
         cells,
     )
@@ -134,7 +144,8 @@ def verify_lineage(example: Example, snapshot: LineageSnapshot) -> LineageCheck:
     changed: list[tuple[SourceField, int, int]] = []
     missing: list[tuple[SourceField, int, int]] = []
     if example.dataset != snapshot.dataset or example.qid != snapshot.qid:
-        return LineageCheck(False, (), (("question", -1, -1),))
+        return LineageCheck(False, (), (("question", -1, -1),), False)
+    structure_changed = _structure_digest(example) != snapshot.structure_sha256
     for cell in snapshot.cells:
         key = (cell.field, cell.doc, cell.sent)
         try:
@@ -144,7 +155,12 @@ def verify_lineage(example: Example, snapshot: LineageSnapshot) -> LineageCheck:
             continue
         if _digest(value) != cell.sha256:
             changed.append(key)
-    return LineageCheck(not changed and not missing, tuple(changed), tuple(missing))
+    return LineageCheck(
+        not changed and not missing and not structure_changed,
+        tuple(changed),
+        tuple(missing),
+        structure_changed,
+    )
 
 
 def verify_result_binding(snapshot: LineageSnapshot, program: Program, answer: str) -> bool:

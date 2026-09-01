@@ -58,6 +58,30 @@ def test_refresh_reuses_replays_or_recompiles_fail_closed() -> None:
     assert rejected.answer == ""
 
 
+def test_structure_guard_recompiles_on_sentence_insert_or_delete() -> None:
+    example = _example()
+    program = compile_gold(example)
+    answer = execute(example, program).answer
+    snapshot = bind_lineage(example, program)
+
+    inserted_documents = list(example.documents)
+    inserted_documents[2] = replace(
+        inserted_documents[2],
+        sentences=inserted_documents[2].sentences + ("A newly inserted fact.",),
+    )
+    inserted = replace(example, documents=tuple(inserted_documents))
+    inserted_check = verify_lineage(inserted, snapshot)
+    assert inserted_check.structure_changed
+    assert refresh_result(inserted, program, answer, snapshot).action == "recompile"
+
+    deleted_documents = list(example.documents)
+    deleted_documents[2] = replace(deleted_documents[2], sentences=())
+    deleted = replace(example, documents=tuple(deleted_documents))
+    deleted_check = verify_lineage(deleted, snapshot)
+    assert deleted_check.structure_changed
+    assert refresh_result(deleted, program, answer, snapshot).action == "recompile"
+
+
 def test_stale_uncertified_answer_requires_model_recompilation() -> None:
     example = _example()
     grounded = compile_gold(example)

@@ -5,10 +5,10 @@ import re
 from pathlib import Path
 
 from .data import iter_examples
+from .output_protocols import parse_citation_output
 from .text import exact_match, token_f1
 
 _ANSWER = re.compile(r"<ANSWER>\s*(.*?)\s*</ANSWER>", flags=re.DOTALL)
-_CITATION = re.compile(r"<CITATION>\s*(\{.*?\})\s*</CITATION>", flags=re.DOTALL)
 
 
 def _set_f1(predicted: set[tuple[int, int]], gold: set[tuple[int, int]]) -> float:
@@ -53,19 +53,14 @@ def evaluate_output_baseline(
                     continue
                 answer = match.group(1).strip()
             else:
-                match = _CITATION.search(output)
-                if match is None:
-                    continue
-                payload = json.loads(match.group(1))
-                answer = str(payload["answer"])
-                evidence = {(int(ref[0]), int(ref[1])) for ref in payload["evidence"]}
+                answer, evidence = parse_citation_output(output)
         except (KeyError, TypeError, ValueError, json.JSONDecodeError):
             continue
         parsed += 1
         em_sum += exact_match(answer, example.answers)
         f1_sum += token_f1(answer, example.answers)
         if task == "citation":
-            citations_valid = all(
+            citations_valid = bool(evidence) and all(
                 0 <= doc < len(example.documents)
                 and 0 <= sent < len(example.documents[doc].sentences)
                 for doc, sent in evidence

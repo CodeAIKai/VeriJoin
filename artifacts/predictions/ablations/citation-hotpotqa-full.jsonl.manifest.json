@@ -1,6 +1,6 @@
 {
   "config": {
-    "adapter": "/path/to/VeriJoin/artifacts/checkpoints/ablations/citation-stage3-12k",
+    "adapter": "/path/to/verijoin/artifacts/checkpoints/ablations/citation-stage3-12k",
     "backend": "vllm",
     "chunk_size": 512,
     "dataset_variant": null,
@@ -11,7 +11,7 @@
     "max_input_tokens": 6144,
     "max_model_len": 6272,
     "max_new_tokens": 128,
-    "model": "/path/to/Qwen2.5-7B-Instruct",
+    "model": "/path/to/models/Qwen2.5-7B-Instruct",
     "num_candidates": 1,
     "seed": 20260825,
     "skip_overlength": false,

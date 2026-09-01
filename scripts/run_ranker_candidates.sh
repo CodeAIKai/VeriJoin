@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-project_root="/path/to/VeriJoin"
+project_root="/path/to/verijoin"
 raw_root="/path/to/datasets"
 config="${1:-configs/stage3-guided-train-ranker.json}"
 

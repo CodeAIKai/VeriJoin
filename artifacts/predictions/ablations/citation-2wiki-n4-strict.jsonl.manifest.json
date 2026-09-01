@@ -1,0 +1,10 @@
+{
+  "additional_model_calls": 0,
+  "dataset": "2wiki",
+  "dataset_variant": null,
+  "derived_from": "artifacts/predictions/ablations/citation-2wiki-n4.jsonl",
+  "examples": 12576,
+  "execution_guided": true,
+  "split": "dev",
+  "task": "citation"
+}

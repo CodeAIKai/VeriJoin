@@ -1,103 +1,130 @@
-# Full development-set results (2026-08-25)
+# Final full-set experimental record (2026-08-31)
 
-## Evaluation contract and completeness
+## Scope and protocol
 
-These are local, labeled development-set results, not blind-test submissions. The run covers every
-example in HotpotQA distractor dev (7,405), 2WikiMultiHopQA dev (12,576), and MuSiQue-answerable
-dev (2,417): 22,398 questions in total. The fixed N=4 run generated four candidates for every
-question (89,592 candidates), with zero skipped overlength examples and no context truncation.
+All benchmark values are local, labeled, provided-context development results, not blind-test or
+open-corpus scores. The evaluation covers every HotpotQA distractor-dev question (7,405), every
+2WikiMultiHopQA dev question (12,576), and every answerable MuSiQue dev question (2,417): 22,398
+questions with no sampling, skipped overlength inputs, or context truncation.
 
-All rows use one Qwen2.5-7B-Instruct compiler with the same QLoRA adapter and VM. The main N=4
-selector is fixed across datasets and does not read labels: strongest executable tier, then answer
-consensus, then true mean generated-token log-likelihood. A previously generated N=4 diagnostic
-lacked real token log-probabilities and is excluded from all claims; only files containing `fixed`
-are used below.
+The main compiler and the answer-only, citation-only, and free-literal controls use Qwen2.5-7B,
+independent QLoRA adapters, the same source examples, three training stages, 12,000 cumulative
+exposures, and N=4 label-free selection. Each protocol therefore generates 89,592 candidates; the
+four protocols total 358,368 candidates. The selector can use serving-time validity, answer
+consensus, and mean generated-token likelihood, never reference labels.
 
-## Main results
+## Main compiler results
 
-Answer EM/F1 follows the benchmark answer normalization. Strict F1 assigns zero to malformed,
-ungrounded, or disconnected programs. Certified coverage is the fraction executed by deterministic
-`copy/argmin/argmax/equal/common` operators; certified conditional F1 is computed only on that
-subset and is not an unconditional accuracy score.
+Strict F1 assigns zero to malformed, ungrounded, or proof-invalid programs. Certified coverage is
+the fraction executed by deterministic `copy/argmin/argmax/equal/common` operators.
 
-| Dataset | Decode | Examples | Answer EM | Answer F1 | Strict F1 | Valid % | Evidence F1 | Joint F1 | Certified coverage | Certified conditional F1 |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| HotpotQA | greedy N=1 | 7,405 | 61.82 | 75.08 | 67.14 | 85.05 | 84.83 | 65.72 | 79.00 | 78.51 |
-| HotpotQA | **execution N=4** | 7,405 | **62.73** | **76.24** | **71.27** | **90.83** | **84.91** | **66.75** | **84.79** | 78.07 |
-| 2Wiki | greedy N=1 | 12,576 | 75.91 | 81.95 | 77.96 | 92.21 | 94.69 | 80.46 | 89.38 | 84.46 |
-| 2Wiki | **execution N=4** | 12,576 | **76.93** | **82.86** | **80.34** | **95.32** | **94.90** | **81.42** | **91.81** | 84.42 |
-| MuSiQue | greedy N=1 | 2,417 | 50.02 | 59.77 | 40.33 | 58.21 | 85.35 (document) | n/a | 58.17 | 69.33 |
-| MuSiQue | **execution N=4** | 2,417 | **51.55** | **61.51** | **46.68** | **69.55** | **86.07 (document)** | n/a | **69.51** | 67.15 |
+| Dataset | Decode | Answer F1 | Strict F1 | Valid % | Evidence F1 | Certified coverage |
+|---|---|---:|---:|---:|---:|---:|
+| HotpotQA | N=1 | 75.08 | 67.14 | 85.05 | 84.83 | 79.00 |
+| HotpotQA | N=4 | 76.24 | 71.27 | 90.83 | 84.91 | 84.79 |
+| 2Wiki | N=1 | 81.95 | 77.96 | 92.21 | 94.69 | 89.38 |
+| 2Wiki | N=4 | 82.86 | 80.34 | 95.32 | 94.90 | 91.81 |
+| MuSiQue | N=1 | 59.77 | 40.33 | 58.21 | 85.35 (document) | 58.17 |
+| MuSiQue | N=4 | 61.51 | 46.68 | 69.55 | 86.07 (document) | 69.51 |
 
-N=4 improves unconditional Answer F1 over N=1 by +1.16, +0.91, and +1.74 points, and strict F1
-by +4.12, +2.38, and +6.34 points on HotpotQA, 2Wiki, and MuSiQue respectively. The larger strict
-gains show that execution guidance mainly reduces invalid/disconnected outputs. The reduction in
-certified conditional F1 on HotpotQA and MuSiQue is a coverage-composition effect and is reported
-rather than hidden.
+N=4 raises Answer F1 by 1.16/0.91/1.74 and Strict F1 by 4.12/2.38/6.34.
+Paired Answer-F1 95% intervals are [0.78,1.56], [0.66,1.16], and [0.98,2.54].
+The N=4 run generates 89,592 candidates in 5,538.20 seconds on one RTX 5090.
 
-## Candidate-selector ablation
+## Equal-budget output protocols
 
-All N=4 selectors see exactly the same four generated candidates. The BGE pairwise ranker and small
-answer-group meta-ranker are trained only from training-derived questions; they never see dev
-labels. The meta-ranker is 0.08 F1 above execution selection on HotpotQA but loses on the other two
-datasets and lowers strict F1 on all three. The single fixed execution selector is therefore the
-pre-declared main method rather than choosing a selector per dataset.
+| Dataset | Protocol | Answer F1 | Strict F1 | Valid type/rate | Evidence F1 | Certified coverage |
+|---|---|---:|---:|---:|---:|---:|
+| HotpotQA | Answer-only | 78.96 | — | parse 99.99 | — | — |
+| HotpotQA | Citation-only | 79.32 | — | citation 100.00 | 85.08 | — |
+| HotpotQA | Free literal | 78.73 | 73.82 | proof 92.95 | 84.51 | 0.00 |
+| HotpotQA | VeriJoin | 76.24 | 71.27 | proof 90.83 | 84.91 | 84.79 |
+| 2Wiki | Answer-only | 79.08 | — | parse 100.00 | — | — |
+| 2Wiki | Citation-only | 80.02 | — | citation 99.99 | 94.82 | — |
+| 2Wiki | Free literal | 78.67 | 75.79 | proof 95.56 | 94.53 | 0.00 |
+| 2Wiki | VeriJoin | 82.86 | 80.34 | proof 95.32 | 94.90 | 91.81 |
+| MuSiQue | Answer-only | 65.80 | — | parse 100.00 | — | — |
+| MuSiQue | Citation-only | 64.21 | — | citation 100.00 | 38.11 | — |
+| MuSiQue | Free literal | 63.79 | 48.14 | proof 71.25 | 85.61 | 0.00 |
+| MuSiQue | VeriJoin | 61.51 | 46.68 | proof 69.55 | 86.07 | 69.51 |
 
-| Selector over N=4 | Hotpot Answer/Strict F1 | 2Wiki Answer/Strict F1 | MuSiQue Answer/Strict F1 |
-|---|---:|---:|---:|
-| true likelihood | 75.15 / 67.80 | 82.45 / 78.96 | 60.38 / 42.20 |
-| BGE pairwise ranker | 75.75 / 70.38 | 82.75 / 80.11 | 60.74 / 45.32 |
-| answer-group meta-ranker | 76.33 / 71.14 | 82.69 / 80.13 | 60.36 / 45.18 |
-| **VM execution + consensus + likelihood** | **76.24 / 71.27** | **82.86 / 80.34** | **61.51 / 46.68** |
+VeriJoin minus answer-only Answer F1 is -2.72 (95% CI [-3.44,-1.99]), +3.78
+([3.21,4.38]), and -4.29 ([-5.90,-2.68]). VeriJoin minus free-literal Strict F1 is
+-2.55 ([-3.35,-1.75]), +4.55 ([3.97,5.15]), and -1.46 ([-3.07,0.19]); the
+MuSiQue difference is not significant (p=0.087). This falsifies a universal accuracy benefit.
+The surviving claim is a dataset-dependent quality/maintainability frontier: literal programs have
+zero deterministic certificate coverage, while VeriJoin certifies 84.79/91.81/69.51%.
 
-The ranker result is a useful negative experiment: train-derived holdout accuracy did not transfer
-into a consistently better full-dev selector. It must not replace the main method post hoc.
+Near-perfect citation format is also insufficient: citation-only MuSiQue evidence F1 is 38.11,
+versus 86.07 for the typed program. 2Wiki is the positive value-execution case because deterministic
+comparison reducers are common; VeriJoin exceeds free literal by 4.55 Strict F1.
 
-## Run completeness and cost
+## Update routing and structural safety
 
-| Dataset | Questions | Candidates | Generation seconds | Questions/s | Input tokens | Output tokens | Skipped |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| HotpotQA | 7,405 | 29,620 | 1,859.77 | 3.98 | 13,582,289 | 3,860,745 | 0 |
-| 2Wiki | 12,576 | 50,304 | 2,607.20 | 4.82 | 17,711,614 | 7,279,250 | 0 |
-| MuSiQue | 2,417 | 9,668 | 1,071.23 | 2.26 | 7,781,684 | 1,684,433 | 0 |
+On all N=4 valid outputs, the uniform-cell expected recomputation rate is 7.11/10.20/4.53%, a
+92.89/89.80/95.47% reduction relative to invalidating each full displayed context. Mean snapshot
+sizes after adding an ordered document/sentence-count digest are 870/926/958 bytes; bind medians are
+165/147/231 us and verification medians 13.4/14.0/17.7 us.
 
-Total N=4 generation time was 5,538.20 seconds (92.30 minutes) on one RTX 5090. Training used
-NF4 QLoRA rank 64 and 12,000 cumulative balanced sample exposures. The final 6,000-exposure stage
-took 5,135.76 seconds, peaked at 23.57 GB allocated / 32.37 GB reserved, and selected its checkpoint
-using only a training-derived holdout. The filtered SFT files contain 267,364 train rows and 5,437
-holdout rows, with zero ID overlap with each other or with dev.
+Every eligible certified program receives five deterministic update classes:
 
-## Versioned-lineage update experiment
+- unread-cell content edit -> reuse;
+- read-sentence rewrite retaining the operand -> replay;
+- answer-value replacement -> recompile;
+- sentence insertion -> recompile;
+- sentence deletion -> recompile.
 
-The current update test mutates one referenced cell and one unreferenced distractor cell for every
-valid N=1 program. It validates implementation semantics, but it is synthetic and is not yet a
-real time-versioned corpus benchmark.
+The declared action is taken in 100% of 6,278-6,279 HotpotQA, 11,546 2Wiki, and 1,680 MuSiQue
+eligible cases per class. This establishes controller conformance, not new-plan accuracy.
 
-| Dataset | Valid programs | Relevant detected | Irrelevant preserved | Selective recompute | Recompute reduction | Snapshot bytes | Bind p50/p95 us | Verify p50/p95 us |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| HotpotQA | 6,298 | 100% | 100% | 7.09% | 92.91% | 781.66 | 153.30 / 256.49 | 5.44 / 7.56 |
-| 2Wiki | 11,596 | 100% | 100% | 10.26% | 89.74% | 840.29 | 132.07 / 427.40 | 5.91 / 7.81 |
-| MuSiQue | 1,407 | 100% | 100% | 4.51% | 95.49% | 867.63 | 215.16 / 496.12 | 6.49 / 9.56 |
+## Actual-program Wikipedia history
 
-## Claim status
+Fifty HotpotQA titles are selected by SHA-256 order from titles cited by certified predictions. The
+last revision at or before the official 2017-10-01 snapshot anchor and up to ten later revisions are
+fetched. Forty-seven pages resolve; 34 contribute 36 actual program/page bindings. An event is
+eligible only when the generated program's real evidence sentences and pointer quotes bind in the
+old revision. Across 315 changed adjacent-revision events, routing is 303 reuse, 10 replay, and 2
+recompile, avoiding 99.37% of 7B calls relative to page-version invalidation. This is not a complete
+historical QA split.
 
-These results establish a complete, reproducible local 7B baseline and a consistent N=4 gain. They
-do **not** establish 7B SOTA: there is no authoritative leaderboard filtered by model size and
-training recipe, and nearby 7B papers use incompatible retrieval modes, metrics, or sampled
-evaluation. They also do not establish blind-test SOTA because no official test submission has been
-made. Any paper table must keep official blind-test systems, same-scale 7B systems, open-corpus
-systems, and these closed-context dev results in separate blocks.
+## Controlled fact-change recovery
 
-Before an acceptance-oriented submission, the lineage contribution still needs a real source-update
-workload, adversarial disconnected/counterfactual tests, same-backbone answer-only and citation-only
-ablations, and direct provenance/cache comparisons with BLIP and GroundedCache.
+Recovery is conditioned on an originally correct, certified `copy` program with a numeric/date
+answer occurring once in the full context. Eligible pools contain 464/523/207 cases; SHA-256 order
+selects 200 per dataset. A deterministic +/-1 source edit makes the old plan invalid, and an oracle
+repair is certified only as a workload sanity check. Oracle programs are never supplied to models.
 
-## Reproducibility artifacts
+| Dataset | Pool/used | Stale EM | Old-plan valid | VeriJoin Strict F1 | Recertified | Answer-only F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| HotpotQA | 464/200 | 0.00 | 0.00 | 97.80 | 99.5 | 94.12 |
+| 2Wiki | 523/200 | 0.00 | 0.00 | 99.12 | 100.0 | 95.19 |
+| MuSiQue | 207/200 | 0.00 | 0.00 | 97.62 | 99.5 | 91.32 |
 
-- Main reports: `artifacts/results/stage3-*-full-fixed-execution-n4.json`
-- Greedy reports: `artifacts/results/stage3-*-full-greedy.json`
-- Update reports: `artifacts/results/stage3-*-full-greedy-updates.json`
-- Full candidate files and manifests: `artifacts/predictions/stage3-*-full-fixed-n4.jsonl*`
-- Fixed full-run script: `scripts/run_fixed_n4_dev.sh`
-- Final adapter manifest: `artifacts/checkpoints/stage3-12k/run_manifest.json`
-- Ranker manifest: `artifacts/checkpoints/ranker-bge-lora/training_manifest.json`
+Paired VeriJoin-minus-answer-only F1 is +3.68 (95% CI [0.77,6.62]), +3.92
+([1.69,6.50]), and +6.30 ([2.22,10.53]). Because eligibility is defined by prior VeriJoin success,
+these are conditional recovery results, not unconditional model rankings. Program and answer-only
+generation take 237.2 and 110.8 seconds for 2,400 candidates each in one loaded base-model process.
+
+## Provenance/cache comparison
+
+On certified outputs, VeriJoin stores 888/934/958 bytes and verifies in 14.77/15.42/19.14 us.
+The explicitly labeled BLIP-style deletion proxy stores 409/401/524 bytes but needs 52.55/42.44/95.00
+additional deterministic subset executions; it is not an official BLIP reproduction. A
+GroundedCache-style document-version gate has zero unsafe hits on relevant changes but falsely
+invalidates 100% of results when an unread sentence in the same cited document changes; VeriJoin's
+cell dependency has zero false invalidations on that workload.
+
+## Reproducibility map
+
+- Main N=4: `artifacts/results/stage3-*-full-fixed-execution-n4.json`
+- Output protocols: `artifacts/results/protocol-{answer,citation,free-literal}-*-n4.json`
+- Equal-budget pairing: `artifacts/results/paired-n4-*.json`
+- Structural/update stress: `artifacts/results/update-{structural,stress}-*.json`
+- Actual history: `artifacts/results/hotpotqa-2017-program-history.json`
+- Recovery: `artifacts/results/recompile-recovery-{600,paired}.json`
+- Provenance: `artifacts/results/provenance-structural-*.json`
+- Per-example recovery predictions: `artifacts/predictions/update-recovery/*.jsonl`
+
+The code passes 65 tests and Ruff. Results establish a systems Pareto contribution, not 7B or overall
+QA SOTA. Remaining submission administration is a public archival artifact URL and an author-approved
+license; neither is fabricated in the local package.
